@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">每日统计</string>
+    <string name="tab_text_1">存款</string>
+    <string name="tab_text_2">发卡</string>
+    <string name="tab_text_3">基保理</string>
+    <string name="tab_text_4">信用卡</string>
+    <string name="tab_text_5">网金</string>
+</resources>

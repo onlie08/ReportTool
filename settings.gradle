@@ -1,0 +1,31 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+        maven{
+            url 'https://www.jitpack.io' //关键
+        }
+        maven {
+            allowInsecureProtocol=true
+            url "http://artifactory.sf-express.com/artifactory/maven/"
+        }
+
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        maven{
+            url 'https://www.jitpack.io' //关键
+        }
+        maven {
+            allowInsecureProtocol=true
+            url "http://artifactory.sf-express.com/artifactory/maven/"
+        }
+    }
+}
+rootProject.name = "ReportTool"
+include ':app'
