@@ -1,9 +1,16 @@
 package com.ch.report.network;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Toast;
 
+import com.ch.report.R;
 import com.sf.appupdater.AppConfig;
 import com.sf.appupdater.AppUpdater;
 import com.sf.appupdater.Environment;
@@ -71,7 +78,21 @@ public class SFUpdaterUtils {
 
             @Override
             public void onUpdate(UpdateInfo updateInfo) {
-                Toast.makeText(context, "有新版本", Toast.LENGTH_SHORT).show();
+                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(context);
+                builder.setTitle("软件有新版本");
+                builder.setMessage(updateInfo.upgradeContent);
+                builder.setPositiveButton("去升级", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent intent = new Intent();
+                        intent.setAction("android.intent.action.VIEW");
+                        Uri content_url = Uri.parse(updateInfo.appUrl);
+                        intent.setData(content_url);
+                        context.startActivity(intent);
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         });
     }

@@ -116,7 +116,9 @@ public class MainActivity extends AppCompatActivity {
         title.setText("每日统计-"+userName);
         initTaskDate();
 
-        new Handler().postDelayed(() -> SFUpdaterUtils.checkVersion(MainActivity.this),1000);
+        SFUpdaterUtils.checkVersionOnly(MainActivity.this);
+//        SFUpdaterUtils.checkNewVersion(MainActivity.this);
+//        new Handler().postDelayed(() -> SFUpdaterUtils.checkVersion(MainActivity.this),1000);
     }
 
     private void initTaskDate(){
