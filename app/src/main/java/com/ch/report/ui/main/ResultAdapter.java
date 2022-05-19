@@ -63,8 +63,10 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
             String showText;
             if(vaules.length == 2 && null != vaules[1]){
                 showText = vaules[0] + "笔\n" + vaules[1] + "万元";
-            }else {
+            }else if(vaules.length == 1){
                 showText = vaules[0] + "笔";
+            }else {
+                showText = "";
             }
             viewHolder.tv_value.setText(showText);
         }

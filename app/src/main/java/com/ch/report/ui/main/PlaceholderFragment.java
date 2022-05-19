@@ -140,11 +140,15 @@ public class PlaceholderFragment extends Fragment {
 
         if (!TextUtils.isEmpty(valueBean.getValue())) {
             String[] values = valueBean.getValue().split(",");
-            edit_count.setText(values[0]);
+            if(null == values)return;
             if(values.length == 2){
                 edit_value.setText(values[1]);
             }
-            edit_count.setSelection(values[0].length());
+            if(values.length >0){
+                edit_count.setText(values[0]);
+                edit_count.setSelection(values[0].length());
+            }
+
         }
 
 //        if (!TextUtils.isEmpty(valueBean.getValue())) {
@@ -159,8 +163,17 @@ public class PlaceholderFragment extends Fragment {
                 Toast.makeText(getContext(), "请输入具体数量", Toast.LENGTH_LONG).show();
                 return;
             }
-            valueBean.setValue(edit_count.getEditableText().toString()+","+edit_value.getEditableText().toString());
-            valueBean.setInfo(edit_info.getEditableText().toString());
+            if (TextUtils.isEmpty(edit_count.getText().toString().trim()) && !TextUtils.isEmpty(edit_value.getText().toString().trim())) {
+                Toast.makeText(getContext(), "请输入具体数量", Toast.LENGTH_LONG).show();
+                return;
+            }
+            if(TextUtils.isEmpty(edit_count.getEditableText().toString().trim()) && TextUtils.isEmpty(edit_value.getEditableText().toString().trim())){
+                valueBean.setValue(null);
+                valueBean.setInfo(null);
+            }else {
+                valueBean.setValue(edit_count.getEditableText().toString()+","+edit_value.getEditableText().toString());
+                valueBean.setInfo(edit_info.getEditableText().toString());
+            }
             dialog.dismiss();
             new ReportTask(new ReportTask.CallBackListener() {
                 @Override

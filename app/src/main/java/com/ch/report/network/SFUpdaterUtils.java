@@ -89,7 +89,7 @@ public class SFUpdaterUtils {
                     Toast.makeText(context, "有新版本", Toast.LENGTH_SHORT).show();
 
                 }
-                checkNewVersion(context);
+//                checkNewVersion(context);
             }
         });
     }

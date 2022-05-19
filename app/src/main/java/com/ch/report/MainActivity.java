@@ -2,12 +2,14 @@ package com.ch.report;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.ch.report.bean.ResultBean;
+import com.ch.report.common.PerMissionManage;
 import com.ch.report.network.InitTask;
 import com.ch.report.network.QueryAllTask;
 import com.ch.report.network.SFUpdaterUtils;
@@ -22,8 +24,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.Handler;
 import android.os.StrictMode;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
@@ -41,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView title;
     private ActivityMainBinding binding;
 //    private ResultBean resultBean;
+    boolean permission = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,8 +63,8 @@ public class MainActivity extends AppCompatActivity {
             finish();
             return;
         }
+//        permission = PerMissionManage.getSingleton().requestPermission(MainActivity.this);
 
-        SFUpdaterUtils.checkVersion(this);
 
         title = binding.title;
         title.setOnLongClickListener(view -> {
@@ -110,6 +115,8 @@ public class MainActivity extends AppCompatActivity {
         MyApplication.USER_NAME = userName;
         title.setText("每日统计-"+userName);
         initTaskDate();
+
+        new Handler().postDelayed(() -> SFUpdaterUtils.checkVersion(MainActivity.this),1000);
     }
 
     private void initTaskDate(){
@@ -213,6 +220,22 @@ public class MainActivity extends AppCompatActivity {
         },date).execute();
 
 
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == 1) {
+            for (int i = 0; i < permissions.length; i++) {
+                if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+                    permission = true;
+                } else {
+                    permission = false;
+                    ToastUtils.showLong("用户读写权限被禁止，软件将无法升级");
+                }
+            }
+        }
     }
 
 }
