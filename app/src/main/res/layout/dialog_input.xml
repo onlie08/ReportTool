@@ -19,20 +19,61 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/edit_value"
+        android:id="@+id/edit_count"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:hint="输入数量或金额"
+        android:hint="输入数量"
         android:text=""
+        android:inputType="number"
         android:textSize="14sp"
         android:focusable="true"
         android:focusableInTouchMode="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="笔"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/edit_count"
+        app:layout_constraintTop_toTopOf="@+id/edit_count"
+        app:layout_constraintBottom_toBottomOf="@+id/edit_count"
+        />
+
+    <EditText
+        android:id="@+id/edit_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:hint="输入金额"
+        android:text=""
+        android:inputType="numberDecimal"
+        android:textSize="14sp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_count" />
+
+    <TextView
+        android:id="@+id/tv_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="万元"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/edit_value"
+        app:layout_constraintTop_toTopOf="@+id/edit_value"
+        app:layout_constraintBottom_toBottomOf="@+id/edit_value"
+        />
 
     <EditText
         android:id="@+id/edit_info"

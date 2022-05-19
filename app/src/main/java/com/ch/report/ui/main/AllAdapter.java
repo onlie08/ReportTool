@@ -69,7 +69,13 @@ public class AllAdapter extends RecyclerView.Adapter<AllAdapter.ViewHolder> {
         valueBeans.addAll(resultBean.getWangJins());
         for(ValueBean valueBean : valueBeans){
             if(!TextUtils.isEmpty(valueBean.getValue())){
-                stringBuffer.append(valueBean.getName()).append(":").append(valueBean.getValue());
+                String[] values = valueBean.getValue().split(",");
+                if(null != values && values.length>0){
+                    stringBuffer.append(valueBean.getName()).append(":").append(values[0]).append("笔");
+                }
+                if(values.length == 2){
+                    stringBuffer.append(" ").append(values[1]).append("万元");
+                }
                 if(!TextUtils.isEmpty(valueBean.getInfo())){
                     stringBuffer.append("(").append(valueBean.getInfo()).append(")");
                 }

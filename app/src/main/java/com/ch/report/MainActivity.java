@@ -11,6 +11,7 @@ import com.ch.report.bean.ResultBean;
 import com.ch.report.network.InitTask;
 import com.ch.report.network.QueryAllTask;
 import com.ch.report.network.SFUpdaterUtils;
+import com.ch.report.network.UserTask;
 import com.ch.report.ui.main.AllAdapter;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -98,12 +99,7 @@ public class MainActivity extends AppCompatActivity {
 
             return false;
         });
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showAllUserInfoDialog(MyApplication.DATE);
-            }
-        });
+        fab.setOnClickListener(view -> showAllUserInfoDialog(MyApplication.DATE));
 
 
         String userName = SPUtils.getInstance().getString("userName");
@@ -151,14 +147,31 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"请输入您的名称",Toast.LENGTH_LONG).show();
                 return;
             }
-            SPUtils.getInstance().put("userName",edit_name.getEditableText().toString());
-            MyApplication.USER_NAME = edit_name.getEditableText().toString();
-            title.setText("每日统计-"+MyApplication.USER_NAME);
-            dialog.dismiss();
-            initTaskDate();
-            if(exit){
-                finish();
+            if (TextUtils.isEmpty(edit_phone.getText().toString().trim())) {
+                Toast.makeText(getApplicationContext(),"请输入您的手机号",Toast.LENGTH_LONG).show();
+                return;
             }
+
+            new UserTask(new UserTask.CallBackListener() {
+                @Override
+                public void onSuccess() {
+                    SPUtils.getInstance().put("userName",edit_name.getEditableText().toString());
+                    SPUtils.getInstance().put("phone",edit_phone.getEditableText().toString());
+                    MyApplication.USER_NAME = edit_name.getEditableText().toString();
+                    title.setText("每日统计-"+MyApplication.USER_NAME);
+                    dialog.dismiss();
+                    initTaskDate();
+                    if(exit){
+                        finish();
+                    }
+                }
+
+                @Override
+                public void onFail(String msg) {
+                    ToastUtils.showLong(msg);
+                }
+            },edit_name.getText().toString().trim(), edit_phone.getText().toString().trim()).execute();
+
         });
     }
 

@@ -59,7 +59,14 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
             viewHolder.tv_value.setVisibility(View.GONE);
         }else {
             viewHolder.tv_value.setVisibility(View.VISIBLE);
-            viewHolder.tv_value.setText(valueBeans.get(i).getValue());
+            String[] vaules = valueBeans.get(i).getValue().split(",");
+            String showText;
+            if(vaules.length == 2 && null != vaules[1]){
+                showText = vaules[0] + "笔\n" + vaules[1] + "万元";
+            }else {
+                showText = vaules[0] + "笔";
+            }
+            viewHolder.tv_value.setText(showText);
         }
 
         if(TextUtils.isEmpty(valueBeans.get(i).getInfo())){

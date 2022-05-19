@@ -110,16 +110,26 @@ public class PlaceholderFragment extends Fragment {
         AlertDialog dialog = builder.create();
         dialog.show();
         TextView tv_name = inflate.findViewById(R.id.tv_name);
+        EditText edit_count = inflate.findViewById(R.id.edit_count);
         EditText edit_value = inflate.findViewById(R.id.edit_value);
         EditText edit_info = inflate.findViewById(R.id.edit_info);
+        TextView tv_value = inflate.findViewById(R.id.tv_value);
         tv_name.setText(valueBean.getName());
 
+        if(valueBean.getType() == 1 || valueBean.getType() == 3 || valueBean.getName().equals("E分期")){
+            edit_value.setVisibility(View.VISIBLE);
+            tv_value.setVisibility(View.VISIBLE);
+        }else {
+            edit_value.setVisibility(View.GONE);
+            tv_value.setVisibility(View.GONE);
+        }
+
         new Handler().postDelayed(() -> {
-            edit_value.requestFocus();
+            edit_count.requestFocus();
             InputMethodManager inputManager =
-                    (InputMethodManager) edit_value.getContext().getSystemService(
+                    (InputMethodManager) edit_count.getContext().getSystemService(
                             Context.INPUT_METHOD_SERVICE);
-            inputManager.showSoftInput(edit_value, 0);
+            inputManager.showSoftInput(edit_count, 0);
         },200);
 
 
@@ -127,19 +137,29 @@ public class PlaceholderFragment extends Fragment {
         MaterialButton btn_sure = inflate.findViewById(R.id.btn_sure);
         MaterialButton btn_cancel = inflate.findViewById(R.id.btn_cancel);
 
+
         if (!TextUtils.isEmpty(valueBean.getValue())) {
-            edit_value.setText(valueBean.getValue());
-            edit_value.setSelection(valueBean.getValue().length());
+            String[] values = valueBean.getValue().split(",");
+            edit_count.setText(values[0]);
+            if(values.length == 2){
+                edit_value.setText(values[1]);
+            }
+            edit_count.setSelection(values[0].length());
         }
+
+//        if (!TextUtils.isEmpty(valueBean.getValue())) {
+//            edit_value.setText(valueBean.getValue());
+//            edit_value.setSelection(valueBean.getValue().length());
+//        }
         if (!TextUtils.isEmpty(valueBean.getInfo())) {
             edit_info.setText(valueBean.getInfo());
         }
         btn_sure.setOnClickListener(v -> {
-            if (TextUtils.isEmpty(edit_value.getText().toString().trim()) && TextUtils.isEmpty(valueBean.getValue())) {
+            if (TextUtils.isEmpty(edit_count.getText().toString().trim()) && TextUtils.isEmpty(valueBean.getValue())) {
                 Toast.makeText(getContext(), "请输入具体数量", Toast.LENGTH_LONG).show();
                 return;
             }
-            valueBean.setValue(edit_value.getEditableText().toString());
+            valueBean.setValue(edit_count.getEditableText().toString()+","+edit_value.getEditableText().toString());
             valueBean.setInfo(edit_info.getEditableText().toString());
             dialog.dismiss();
             new ReportTask(new ReportTask.CallBackListener() {
