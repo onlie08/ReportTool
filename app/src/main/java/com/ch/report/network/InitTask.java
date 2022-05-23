@@ -58,6 +58,8 @@ public class InitTask extends AsyncTask<String, Integer, ResultBean> {
                 resultBean.setImportants(new Gson().fromJson(obj.getString("important"),new TypeToken<ArrayList<ValueBean>>() {}.getType()));
                 resultBean.setXingYongKa(new Gson().fromJson(obj.getString("xingYongKa"),new TypeToken<ArrayList<ValueBean>>() {}.getType()));
                 resultBean.setWangJins(new Gson().fromJson(obj.getString("wangJin"),new TypeToken<ArrayList<ValueBean>>() {}.getType()));
+                resultBean.setDuiGong(new Gson().fromJson(obj.getString("duiGong"),new TypeToken<ArrayList<ValueBean>>() {}.getType()));
+                resultBean.setOthers(new Gson().fromJson(obj.getString("other"),new TypeToken<ArrayList<ValueBean>>() {}.getType()));
             } else {
                 resultBean = initResultBean();
                 AVUtils.registReport(resultBean);
@@ -83,31 +85,43 @@ public class InitTask extends AsyncTask<String, Integer, ResultBean> {
         ValueBean valueBean = new ValueBean();
         valueBean.setType(1);
         valueBean.setName("个人预约揽存");
+        valueBean.setCountUnit("笔");
+        valueBean.setValueUnit("万元");
         cashs.add(valueBean);
 
         valueBean = new ValueBean();
         valueBean.setType(1);
         valueBean.setName("活期转换");
+        valueBean.setCountUnit("笔");
+        valueBean.setValueUnit("万元");
         cashs.add(valueBean);
 
         valueBean = new ValueBean();
         valueBean.setType(1);
         valueBean.setName("结构回调");
+        valueBean.setCountUnit("笔");
+        valueBean.setValueUnit("万元");
         cashs.add(valueBean);
 
         valueBean = new ValueBean();
         valueBean.setType(1);
         valueBean.setName("柜面稳存");
+        valueBean.setCountUnit("笔");
+        valueBean.setValueUnit("万元");
         cashs.add(valueBean);
 
         valueBean = new ValueBean();
         valueBean.setType(1);
         valueBean.setName("他行挖转");
+        valueBean.setCountUnit("笔");
+        valueBean.setValueUnit("万元");
         cashs.add(valueBean);
 
         valueBean = new ValueBean();
         valueBean.setType(1);
         valueBean.setName("慧享交易金额");
+        valueBean.setCountUnit("笔");
+        valueBean.setValueUnit("万元");
         cashs.add(valueBean);
         resultBean.setCashs(cashs);
 
@@ -118,21 +132,29 @@ public class InitTask extends AsyncTask<String, Integer, ResultBean> {
         valueBean = new ValueBean();
         valueBean.setType(2);
         valueBean.setName("借记卡");
+        valueBean.setCountUnit("笔");
+        valueBean.setValueUnit("万元");
         cards.add(valueBean);
 
         valueBean = new ValueBean();
         valueBean.setType(2);
         valueBean.setName("其中社保卡（新客）");
+        valueBean.setCountUnit("笔");
+        valueBean.setValueUnit("万元");
         cards.add(valueBean);
 
         valueBean = new ValueBean();
         valueBean.setType(2);
         valueBean.setName("特色卡");
+        valueBean.setCountUnit("笔");
+        valueBean.setValueUnit("万元");
         cards.add(valueBean);
 
         valueBean = new ValueBean();
         valueBean.setType(2);
         valueBean.setName("三方绑卡");
+        valueBean.setCountUnit("笔");
+        valueBean.setValueUnit("万元");
         cards.add(valueBean);
         resultBean.setCards(cards);
 
@@ -142,26 +164,36 @@ public class InitTask extends AsyncTask<String, Integer, ResultBean> {
         valueBean = new ValueBean();
         valueBean.setType(3);
         valueBean.setName("新规理财拓户");
+        valueBean.setCountUnit("笔");
+        valueBean.setValueUnit("万元");
         importants.add(valueBean);
 
         valueBean = new ValueBean();
         valueBean.setType(3);
         valueBean.setName("个人理财");
+        valueBean.setCountUnit("笔");
+        valueBean.setValueUnit("万元");
         importants.add(valueBean);
 
         valueBean = new ValueBean();
         valueBean.setType(3);
         valueBean.setName("期交保险");
+        valueBean.setCountUnit("笔");
+        valueBean.setValueUnit("万元");
         importants.add(valueBean);
 
         valueBean = new ValueBean();
         valueBean.setType(3);
         valueBean.setName("趸交保险");
+        valueBean.setCountUnit("笔");
+        valueBean.setValueUnit("万元");
         importants.add(valueBean);
 
         valueBean = new ValueBean();
         valueBean.setType(3);
         valueBean.setName("货币基金");
+        valueBean.setCountUnit("笔");
+        valueBean.setValueUnit("万元");
         importants.add(valueBean);
         resultBean.setImportants(importants);
 
@@ -171,31 +203,43 @@ public class InitTask extends AsyncTask<String, Integer, ResultBean> {
         valueBean = new ValueBean();
         valueBean.setType(4);
         valueBean.setName("信用卡");
+        valueBean.setCountUnit("笔");
+        valueBean.setValueUnit("万元");
         xingYongKas.add(valueBean);
 
         valueBean = new ValueBean();
         valueBean.setType(4);
         valueBean.setName("其中获新客");
+        valueBean.setCountUnit("笔");
+        valueBean.setValueUnit("万元");
         xingYongKas.add(valueBean);
 
         valueBean = new ValueBean();
         valueBean.setType(4);
         valueBean.setName("三方绑卡");
+        valueBean.setCountUnit("笔");
+        valueBean.setValueUnit("万元");
         xingYongKas.add(valueBean);
 
         valueBean = new ValueBean();
         valueBean.setType(4);
         valueBean.setName("商户新增");
+        valueBean.setCountUnit("笔");
+        valueBean.setValueUnit("万元");
         xingYongKas.add(valueBean);
 
         valueBean = new ValueBean();
         valueBean.setType(4);
         valueBean.setName("商户促活");
+        valueBean.setCountUnit("笔");
+        valueBean.setValueUnit("万元");
         xingYongKas.add(valueBean);
 
         valueBean = new ValueBean();
         valueBean.setType(4);
         valueBean.setName("E分期");
+        valueBean.setCountUnit("笔");
+        valueBean.setValueUnit("万元");
         xingYongKas.add(valueBean);
         resultBean.setXingYongKa(xingYongKas);
 
@@ -203,23 +247,79 @@ public class InitTask extends AsyncTask<String, Integer, ResultBean> {
         ArrayList<ValueBean> wangJins = new ArrayList<>();
 
         valueBean = new ValueBean();
-        valueBean.setType(4);
+        valueBean.setType(5);
         valueBean.setName("手机银行");
+        valueBean.setCountUnit("笔");
+        valueBean.setValueUnit("万元");
         wangJins.add(valueBean);
 
         valueBean = new ValueBean();
-        valueBean.setType(4);
+        valueBean.setType(5);
         valueBean.setName("收费工银信使");
+        valueBean.setCountUnit("笔");
+        valueBean.setValueUnit("万元");
         wangJins.add(valueBean);
 
         valueBean = new ValueBean();
-        valueBean.setType(4);
+        valueBean.setType(5);
         valueBean.setName("企业银行手机银行动户");
+        valueBean.setCountUnit("笔");
+        valueBean.setValueUnit("万元");
         wangJins.add(valueBean);
 
         resultBean.setWangJins(wangJins);
-        resultBean.setUserName(MyApplication.USER_NAME);
 
+        /////////////////////////////
+        ArrayList<ValueBean> duiGongs = new ArrayList<>();
+
+        valueBean = new ValueBean();
+        valueBean.setType(6);
+        valueBean.setName("公司存款");
+        valueBean.setCountUnit("户");
+        valueBean.setValueUnit("万元");
+        duiGongs.add(valueBean);
+
+        valueBean = new ValueBean();
+        valueBean.setType(6);
+        valueBean.setName("机构存款");
+        valueBean.setCountUnit("户");
+        valueBean.setValueUnit("万元");
+        duiGongs.add(valueBean);
+
+        valueBean = new ValueBean();
+        valueBean.setType(6);
+        valueBean.setName("对公结算账户");
+        valueBean.setCountUnit("户");
+        valueBean.setValueUnit("万元");
+        duiGongs.add(valueBean);
+
+        valueBean = new ValueBean();
+        valueBean.setType(6);
+        valueBean.setName("三方存管");
+        valueBean.setCountUnit("户");
+        valueBean.setValueUnit("万元");
+        duiGongs.add(valueBean);
+
+        valueBean = new ValueBean();
+        valueBean.setType(6);
+        valueBean.setName("积存金");
+        valueBean.setCountUnit("户");
+        valueBean.setValueUnit("万元");
+        duiGongs.add(valueBean);
+
+        resultBean.setDuiGong(duiGongs);
+
+        /////////////////////////////
+        ArrayList<ValueBean> others = new ArrayList<>();
+        valueBean = new ValueBean();
+        valueBean.setType(7);
+        valueBean.setName("其他事项");
+        valueBean.setCountUnit("笔");
+        valueBean.setValueUnit("万元");
+        others.add(valueBean);
+        resultBean.setOthers(others);
+
+        resultBean.setUserName(MyApplication.USER_NAME);
         resultBean.setDate(MyApplication.DATE);
 
         return resultBean;

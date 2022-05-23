@@ -10,6 +10,8 @@ public class ValueBean implements Serializable {
      * 3：基保理
      * 4：信用卡
      * 5：网金
+     * 5：对公
+     * 6：其他
      */
     private int type;
 
@@ -19,9 +21,26 @@ public class ValueBean implements Serializable {
     private String name;
 
     /**
+     * 数量
+     */
+    private String count;
+
+    /**
+     * 数量单位
+     */
+    private String countUnit;
+
+
+    /**
      * 值
      */
     private String value;
+
+
+    /**
+     * 数值单位
+     */
+    private String valueUnit;
 
     /**
      * 备注
@@ -58,5 +77,29 @@ public class ValueBean implements Serializable {
 
     public void setInfo(String info) {
         this.info = info;
+    }
+
+    public String getCount() {
+        return count;
+    }
+
+    public void setCount(String count) {
+        this.count = count;
+    }
+
+    public String getCountUnit() {
+        return countUnit;
+    }
+
+    public void setCountUnit(String countUnit) {
+        this.countUnit = countUnit;
+    }
+
+    public String getValueUnit() {
+        return valueUnit;
+    }
+
+    public void setValueUnit(String valueUnit) {
+        this.valueUnit = valueUnit;
     }
 }

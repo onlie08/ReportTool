@@ -55,20 +55,26 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ResultAdapter.ViewHolder viewHolder, final int i) {
         viewHolder.tv_name.setText(valueBeans.get(i).getName());
-        if(TextUtils.isEmpty(valueBeans.get(i).getValue())){
+        if(TextUtils.isEmpty(valueBeans.get(i).getCount())){
             viewHolder.tv_value.setVisibility(View.GONE);
         }else {
             viewHolder.tv_value.setVisibility(View.VISIBLE);
-            String[] vaules = valueBeans.get(i).getValue().split(",");
-            String showText;
-            if(vaules.length == 2 && null != vaules[1]){
-                showText = vaules[0] + "笔\n" + vaules[1] + "万元";
-            }else if(vaules.length == 1){
-                showText = vaules[0] + "笔";
-            }else {
-                showText = "";
+
+            StringBuffer stringBuffer = new StringBuffer();
+            stringBuffer.append(valueBeans.get(i).getCount()).append(valueBeans.get(i).getCountUnit());
+            if(!TextUtils.isEmpty(valueBeans.get(i).getValue())){
+                stringBuffer.append("\n").append(valueBeans.get(i).getValue()).append(valueBeans.get(i).getValueUnit());
             }
-            viewHolder.tv_value.setText(showText);
+//            String[] vaules = valueBeans.get(i).getValue().split(",");
+//            String showText;
+//            if(vaules.length == 2 && null != vaules[1]){
+//                showText = vaules[0] + "笔\n" + vaules[1] + "万元";
+//            }else if(vaules.length == 1){
+//                showText = vaules[0] + "笔";
+//            }else {
+//                showText = "";
+//            }
+            viewHolder.tv_value.setText(stringBuffer.toString());
         }
 
         if(TextUtils.isEmpty(valueBeans.get(i).getInfo())){

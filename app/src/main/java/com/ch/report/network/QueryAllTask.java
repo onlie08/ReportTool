@@ -63,6 +63,8 @@ public class QueryAllTask extends AsyncTask<String, Integer, ArrayList<ResultBea
                         resultBean.setImportants(new Gson().fromJson(object.getString("important"),new TypeToken<ArrayList<ValueBean>>() {}.getType()));
                         resultBean.setXingYongKa(new Gson().fromJson(object.getString("xingYongKa"),new TypeToken<ArrayList<ValueBean>>() {}.getType()));
                         resultBean.setWangJins(new Gson().fromJson(object.getString("wangJin"),new TypeToken<ArrayList<ValueBean>>() {}.getType()));
+                        resultBean.setDuiGong(new Gson().fromJson(object.getString("duiGong"),new TypeToken<ArrayList<ValueBean>>() {}.getType()));
+                        resultBean.setOthers(new Gson().fromJson(object.getString("other"),new TypeToken<ArrayList<ValueBean>>() {}.getType()));
                         resultBeans.add(resultBean);
                     }
 //                    callBackListener.onSuccess(resultBeans);

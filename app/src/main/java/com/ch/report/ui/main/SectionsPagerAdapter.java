@@ -22,7 +22,7 @@ import java.util.List;
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @StringRes
-    private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_2, R.string.tab_text_3, R.string.tab_text_4, R.string.tab_text_5};
+    private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_2, R.string.tab_text_3, R.string.tab_text_4, R.string.tab_text_5, R.string.tab_text_6, R.string.tab_text_7};
     private final Context mContext;
     private ResultBean resultBean;
 
@@ -57,6 +57,12 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
                 break;
             case 4:
                 valueBeans = resultBean.getWangJins();
+                break;
+            case 5:
+                valueBeans = resultBean.getDuiGong();
+                break;
+            case 6:
+                valueBeans = resultBean.getOthers();
                 break;
         }
         return valueBeans;

@@ -8,6 +8,9 @@ public class ResultBean {
     private ArrayList<ValueBean> importants; //基保理
     private ArrayList<ValueBean> xingYongKa;//信用卡
     private ArrayList<ValueBean> wangJins; //网金
+    private ArrayList<ValueBean> duiGong; //对公
+    private ArrayList<ValueBean> others; //其他
+
     private String userName;
     private String date;
 
@@ -49,6 +52,22 @@ public class ResultBean {
 
     public void setWangJins(ArrayList<ValueBean> wangJins) {
         this.wangJins = wangJins;
+    }
+
+    public ArrayList<ValueBean> getDuiGong() {
+        return duiGong;
+    }
+
+    public void setDuiGong(ArrayList<ValueBean> duiGong) {
+        this.duiGong = duiGong;
+    }
+
+    public ArrayList<ValueBean> getOthers() {
+        return others;
+    }
+
+    public void setOthers(ArrayList<ValueBean> others) {
+        this.others = others;
     }
 
     public String getUserName() {

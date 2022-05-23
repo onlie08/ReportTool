@@ -67,20 +67,36 @@ public class AllAdapter extends RecyclerView.Adapter<AllAdapter.ViewHolder> {
         valueBeans.addAll(resultBean.getImportants());
         valueBeans.addAll(resultBean.getXingYongKa());
         valueBeans.addAll(resultBean.getWangJins());
+        valueBeans.addAll(resultBean.getDuiGong());
+        valueBeans.addAll(resultBean.getOthers());
         for(ValueBean valueBean : valueBeans){
-            if(!TextUtils.isEmpty(valueBean.getValue())){
-                String[] values = valueBean.getValue().split(",");
-                if(null != values && values.length>0){
-                    stringBuffer.append(valueBean.getName()).append(":").append(values[0]).append("笔");
-                }
-                if(values.length == 2){
-                    stringBuffer.append(" ").append(values[1]).append("万元");
-                }
-                if(!TextUtils.isEmpty(valueBean.getInfo())){
-                    stringBuffer.append("(").append(valueBean.getInfo()).append(")");
-                }
-                stringBuffer.append("\n");
+            if(TextUtils.isEmpty(valueBean.getCount())){
+                continue;
             }
+            if(!TextUtils.isEmpty(valueBean.getCount())){
+                stringBuffer.append(valueBean.getName()).append(":").append(valueBean.getCount()).append(valueBean.getCountUnit());
+            }
+            if(!TextUtils.isEmpty(valueBean.getValue())){
+                stringBuffer.append(" ").append(valueBean.getValue()).append("万元");
+            }
+            if(!TextUtils.isEmpty(valueBean.getInfo())){
+                stringBuffer.append("(").append(valueBean.getInfo()).append(")");
+            }
+            stringBuffer.append("\n");
+
+//            if(!TextUtils.isEmpty(valueBean.getValue())){
+//                String[] values = valueBean.getValue().split(",");
+//                if(null != values && values.length>0){
+//                    stringBuffer.append(valueBean.getName()).append(":").append(values[0]).append("笔");
+//                }
+//                if(values.length == 2){
+//                    stringBuffer.append(" ").append(values[1]).append("万元");
+//                }
+//                if(!TextUtils.isEmpty(valueBean.getInfo())){
+//                    stringBuffer.append("(").append(valueBean.getInfo()).append(")");
+//                }
+//                stringBuffer.append("\n");
+//            }
         }
         return stringBuffer.toString();
     }

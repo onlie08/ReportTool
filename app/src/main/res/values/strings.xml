@@ -5,6 +5,8 @@
     <string name="tab_text_3">基保理</string>
     <string name="tab_text_4">信用卡</string>
     <string name="tab_text_5">网金</string>
+    <string name="tab_text_6">对公</string>
+    <string name="tab_text_7">其他</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>

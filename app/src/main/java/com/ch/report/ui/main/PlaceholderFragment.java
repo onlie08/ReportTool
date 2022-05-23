@@ -113,15 +113,16 @@ public class PlaceholderFragment extends Fragment {
         EditText edit_count = inflate.findViewById(R.id.edit_count);
         EditText edit_value = inflate.findViewById(R.id.edit_value);
         EditText edit_info = inflate.findViewById(R.id.edit_info);
-        TextView tv_value = inflate.findViewById(R.id.tv_value);
+        TextView tv_value_unit = inflate.findViewById(R.id.tv_value_unit);
+        TextView tv_count_unit = inflate.findViewById(R.id.tv_count_unit);
         tv_name.setText(valueBean.getName());
 
-        if(valueBean.getType() == 1 || valueBean.getType() == 3 || valueBean.getName().equals("E分期")){
+        if(valueBean.getType() == 1 || valueBean.getType() == 3|| valueBean.getType() == 6|| valueBean.getType() == 7 || valueBean.getName().equals("E分期")){
             edit_value.setVisibility(View.VISIBLE);
-            tv_value.setVisibility(View.VISIBLE);
+            tv_value_unit.setVisibility(View.VISIBLE);
         }else {
             edit_value.setVisibility(View.GONE);
-            tv_value.setVisibility(View.GONE);
+            tv_value_unit.setVisibility(View.GONE);
         }
 
         new Handler().postDelayed(() -> {
@@ -137,17 +138,24 @@ public class PlaceholderFragment extends Fragment {
         MaterialButton btn_sure = inflate.findViewById(R.id.btn_sure);
         MaterialButton btn_cancel = inflate.findViewById(R.id.btn_cancel);
 
+        tv_count_unit.setText(valueBean.getCountUnit());
+        tv_value_unit.setText(valueBean.getValueUnit());
+        edit_count.setText(valueBean.getCount());
+        edit_value.setText(valueBean.getValue());
 
         if (!TextUtils.isEmpty(valueBean.getValue())) {
-            String[] values = valueBean.getValue().split(",");
-            if(null == values)return;
-            if(values.length == 2){
-                edit_value.setText(values[1]);
-            }
-            if(values.length >0){
-                edit_count.setText(values[0]);
-                edit_count.setSelection(values[0].length());
-            }
+//            edit_count.setText(valueBean.getCount());
+//            edit_value.setText(valueBean.getValue());
+//
+//            String[] values = valueBean.getValue().split(",");
+//            if(null == values)return;
+//            if(values.length == 2){
+//                edit_value.setText(values[1]);
+//            }
+//            if(values.length >0){
+//                edit_count.setText(values[0]);
+//                edit_count.setSelection(values[0].length());
+//            }
 
         }
 
@@ -159,19 +167,21 @@ public class PlaceholderFragment extends Fragment {
             edit_info.setText(valueBean.getInfo());
         }
         btn_sure.setOnClickListener(v -> {
-            if (TextUtils.isEmpty(edit_count.getText().toString().trim()) && TextUtils.isEmpty(valueBean.getValue())) {
+            if (TextUtils.isEmpty(edit_count.getText().toString().trim()) && TextUtils.isEmpty(valueBean.getCount())) {
                 Toast.makeText(getContext(), "请输入具体数量", Toast.LENGTH_LONG).show();
                 return;
             }
-            if (TextUtils.isEmpty(edit_count.getText().toString().trim()) && !TextUtils.isEmpty(edit_value.getText().toString().trim())) {
-                Toast.makeText(getContext(), "请输入具体数量", Toast.LENGTH_LONG).show();
-                return;
-            }
+//            if (TextUtils.isEmpty(edit_count.getText().toString().trim()) && !TextUtils.isEmpty(edit_value.getText().toString().trim())) {
+//                Toast.makeText(getContext(), "请输入具体数量", Toast.LENGTH_LONG).show();
+//                return;
+//            }
             if(TextUtils.isEmpty(edit_count.getEditableText().toString().trim()) && TextUtils.isEmpty(edit_value.getEditableText().toString().trim())){
                 valueBean.setValue(null);
+                valueBean.setCount(null);
                 valueBean.setInfo(null);
             }else {
-                valueBean.setValue(edit_count.getEditableText().toString()+","+edit_value.getEditableText().toString());
+                valueBean.setCount(edit_count.getEditableText().toString().trim());
+                valueBean.setValue(edit_value.getEditableText().toString().trim());
                 valueBean.setInfo(edit_info.getEditableText().toString());
             }
             dialog.dismiss();
