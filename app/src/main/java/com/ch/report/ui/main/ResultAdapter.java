@@ -55,13 +55,16 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ResultAdapter.ViewHolder viewHolder, final int i) {
         viewHolder.tv_name.setText(valueBeans.get(i).getName());
-        if(TextUtils.isEmpty(valueBeans.get(i).getCount())){
+        if(TextUtils.isEmpty(valueBeans.get(i).getCount()) && TextUtils.isEmpty(valueBeans.get(i).getValue())){
             viewHolder.tv_value.setVisibility(View.GONE);
         }else {
             viewHolder.tv_value.setVisibility(View.VISIBLE);
 
             StringBuffer stringBuffer = new StringBuffer();
-            stringBuffer.append(valueBeans.get(i).getCount()).append(valueBeans.get(i).getCountUnit());
+            if(!TextUtils.isEmpty(valueBeans.get(i).getCount())){
+                stringBuffer.append(valueBeans.get(i).getCount()).append(valueBeans.get(i).getCountUnit());
+            }
+
             if(!TextUtils.isEmpty(valueBeans.get(i).getValue())){
                 stringBuffer.append("\n").append(valueBeans.get(i).getValue()).append(valueBeans.get(i).getValueUnit());
             }

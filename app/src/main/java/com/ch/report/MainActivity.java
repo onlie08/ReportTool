@@ -73,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
         });
         FloatingActionButton fab = binding.fab;
         fab.setOnLongClickListener(view -> {
-            if(!MyApplication.USER_NAME.equals("曹海") && !MyApplication.USER_NAME.equals("曹欢"))return false;
 
             Calendar ca = Calendar.getInstance();
             int mYear = ca.get(Calendar.YEAR);

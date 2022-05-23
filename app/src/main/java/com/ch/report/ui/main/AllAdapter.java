@@ -70,11 +70,12 @@ public class AllAdapter extends RecyclerView.Adapter<AllAdapter.ViewHolder> {
         valueBeans.addAll(resultBean.getDuiGong());
         valueBeans.addAll(resultBean.getOthers());
         for(ValueBean valueBean : valueBeans){
-            if(TextUtils.isEmpty(valueBean.getCount())){
+            if(TextUtils.isEmpty(valueBean.getCount()) && TextUtils.isEmpty(valueBean.getValue())&& TextUtils.isEmpty(valueBean.getInfo())){
                 continue;
             }
+            stringBuffer.append(valueBean.getName()).append(":");
             if(!TextUtils.isEmpty(valueBean.getCount())){
-                stringBuffer.append(valueBean.getName()).append(":").append(valueBean.getCount()).append(valueBean.getCountUnit());
+                stringBuffer.append(valueBean.getCount()).append(valueBean.getCountUnit());
             }
             if(!TextUtils.isEmpty(valueBean.getValue())){
                 stringBuffer.append(" ").append(valueBean.getValue()).append("万元");

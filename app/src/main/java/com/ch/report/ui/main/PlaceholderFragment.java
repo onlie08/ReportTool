@@ -117,20 +117,70 @@ public class PlaceholderFragment extends Fragment {
         TextView tv_count_unit = inflate.findViewById(R.id.tv_count_unit);
         tv_name.setText(valueBean.getName());
 
-        if(valueBean.getType() == 1 || valueBean.getType() == 3|| valueBean.getType() == 6|| valueBean.getType() == 7 || valueBean.getName().equals("E分期")){
-            edit_value.setVisibility(View.VISIBLE);
-            tv_value_unit.setVisibility(View.VISIBLE);
-        }else {
+        if(valueBean.getName().equals("其他")){
             edit_value.setVisibility(View.GONE);
             tv_value_unit.setVisibility(View.GONE);
+            edit_count.setVisibility(View.GONE);
+            tv_count_unit.setVisibility(View.GONE);
+
+        }else if(valueBean.getName().equals("借记卡")
+                ||valueBean.getName().equals("其中社保卡（新客）")
+                ||valueBean.getName().equals("特色卡")
+                ||valueBean.getName().equals("三方绑卡")
+                ||valueBean.getName().equals("其中信用卡三方绑卡")
+                ||valueBean.getName().equals("新规理财拓户")
+                ||valueBean.getName().equals("信用卡")
+                ||valueBean.getName().equals("其中获新客")
+                ||valueBean.getName().equals("商户新增")
+                ||valueBean.getName().equals("商户促活")
+                ||valueBean.getName().equals("手机银行")
+                ||valueBean.getName().equals("收费工银信使")
+                ||valueBean.getName().equals("企业银行手机银行动户")
+                ||valueBean.getName().equals("对公结算账户")
+                ||valueBean.getName().equals("三方存管")
+                ||valueBean.getName().equals("积存金")
+                ) {
+            edit_value.setVisibility(View.GONE);
+            tv_value_unit.setVisibility(View.GONE);
+            edit_count.setVisibility(View.VISIBLE);
+            tv_count_unit.setVisibility(View.VISIBLE);
+
+        }else if(valueBean.getName().equals("公司存款")
+                || valueBean.getName().equals("机构存款")
+        ){
+                edit_value.setVisibility(View.VISIBLE);
+                tv_value_unit.setVisibility(View.VISIBLE);
+                edit_count.setVisibility(View.GONE);
+                tv_count_unit.setVisibility(View.GONE);
+        }else {
+            edit_value.setVisibility(View.VISIBLE);
+            tv_value_unit.setVisibility(View.VISIBLE);
+            edit_count.setVisibility(View.VISIBLE);
+            tv_count_unit.setVisibility(View.VISIBLE);
+        }
+
+//        if(valueBean.getType() == 1 || valueBean.getType() == 3|| valueBean.getType() == 6|| valueBean.getType() == 7 || valueBean.getName().equals("E分期")){
+//            edit_value.setVisibility(View.VISIBLE);
+//            tv_value_unit.setVisibility(View.VISIBLE);
+//        }else {
+//            edit_value.setVisibility(View.GONE);
+//            tv_value_unit.setVisibility(View.GONE);
+//        }
+        View focus;
+        if(edit_count.getVisibility() == View.VISIBLE){
+            focus = edit_count;
+        }else if(edit_value.getVisibility() == View.VISIBLE){
+            focus = edit_value;
+        }else {
+            focus = edit_info;
         }
 
         new Handler().postDelayed(() -> {
-            edit_count.requestFocus();
+            focus.requestFocus();
             InputMethodManager inputManager =
-                    (InputMethodManager) edit_count.getContext().getSystemService(
+                    (InputMethodManager) focus.getContext().getSystemService(
                             Context.INPUT_METHOD_SERVICE);
-            inputManager.showSoftInput(edit_count, 0);
+            inputManager.showSoftInput(focus, 0);
         },200);
 
 
@@ -142,40 +192,37 @@ public class PlaceholderFragment extends Fragment {
         tv_value_unit.setText(valueBean.getValueUnit());
         edit_count.setText(valueBean.getCount());
         edit_value.setText(valueBean.getValue());
-
-        if (!TextUtils.isEmpty(valueBean.getValue())) {
-//            edit_count.setText(valueBean.getCount());
-//            edit_value.setText(valueBean.getValue());
-//
-//            String[] values = valueBean.getValue().split(",");
-//            if(null == values)return;
-//            if(values.length == 2){
-//                edit_value.setText(values[1]);
-//            }
-//            if(values.length >0){
-//                edit_count.setText(values[0]);
-//                edit_count.setSelection(values[0].length());
-//            }
-
-        }
-
-//        if (!TextUtils.isEmpty(valueBean.getValue())) {
-//            edit_value.setText(valueBean.getValue());
-//            edit_value.setSelection(valueBean.getValue().length());
-//        }
         if (!TextUtils.isEmpty(valueBean.getInfo())) {
             edit_info.setText(valueBean.getInfo());
         }
-        btn_sure.setOnClickListener(v -> {
-            if (TextUtils.isEmpty(edit_count.getText().toString().trim()) && TextUtils.isEmpty(valueBean.getCount())) {
-                Toast.makeText(getContext(), "请输入具体数量", Toast.LENGTH_LONG).show();
-                return;
+
+        if(edit_count.getVisibility() == View.VISIBLE){
+            if (!TextUtils.isEmpty(valueBean.getCount())) {
+                edit_count.setSelection(valueBean.getCount().length());
             }
+        }else if(edit_value.getVisibility() == View.VISIBLE){
+            if (!TextUtils.isEmpty(valueBean.getValue())) {
+                edit_value.setText(valueBean.getValue());
+                edit_value.setSelection(valueBean.getValue().length());
+            }
+        }else {
+            if (!TextUtils.isEmpty(valueBean.getInfo())) {
+                edit_info.setText(valueBean.getInfo());
+                edit_info.setSelection(valueBean.getInfo().length());
+            }
+        }
+
+
+        btn_sure.setOnClickListener(v -> {
+//            if (TextUtils.isEmpty(edit_count.getText().toString().trim()) && TextUtils.isEmpty(valueBean.getCount())) {
+//                Toast.makeText(getContext(), "请输入具体数量", Toast.LENGTH_LONG).show();
+//                return;
+//            }
 //            if (TextUtils.isEmpty(edit_count.getText().toString().trim()) && !TextUtils.isEmpty(edit_value.getText().toString().trim())) {
 //                Toast.makeText(getContext(), "请输入具体数量", Toast.LENGTH_LONG).show();
 //                return;
 //            }
-            if(TextUtils.isEmpty(edit_count.getEditableText().toString().trim()) && TextUtils.isEmpty(edit_value.getEditableText().toString().trim())){
+            if(TextUtils.isEmpty(edit_count.getEditableText().toString().trim()) && TextUtils.isEmpty(edit_value.getEditableText().toString().trim()) && !valueBean.getName().equals("其他")){
                 valueBean.setValue(null);
                 valueBean.setCount(null);
                 valueBean.setInfo(null);
