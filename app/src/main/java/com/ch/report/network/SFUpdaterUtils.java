@@ -73,7 +73,7 @@ public class SFUpdaterUtils {
         AppUpdater.sharedInstance().checkVersionOnly(new OnVersionCheckListener() {
             @Override
             public void onNoUpdate() {
-                Toast.makeText(context, "已是最新版本", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "已是最新版本", Toast.LENGTH_SHORT).show();
             }
 
             @Override

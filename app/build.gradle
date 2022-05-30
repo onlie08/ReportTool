@@ -9,8 +9,8 @@ android {
         applicationId "com.ch.report"
         minSdk 22
         targetSdk 31
-        versionCode 22
-        versionName "2.2"
+        versionCode 23
+        versionName "2.3"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
