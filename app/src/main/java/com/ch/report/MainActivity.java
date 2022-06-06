@@ -41,6 +41,7 @@ import android.widget.Toast;
 import com.ch.report.ui.main.SectionsPagerAdapter;
 import com.ch.report.databinding.ActivityMainBinding;
 import com.google.gson.Gson;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -264,6 +265,8 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog dialog = builder.create();
         dialog.show();
         TextView tv_today = inflate.findViewById(R.id.tv_today);
+        TextView tv_close = inflate.findViewById(R.id.tv_close);
+        tv_close.setOnClickListener(view -> dialog.dismiss());
 
         new QueryAllTask(new QueryAllTask.CallBackListener() {
             @Override
@@ -273,8 +276,11 @@ public class MainActivity extends AppCompatActivity {
                     dialog.dismiss();
                     return;
                 }
-                tv_today.setText(dealWithResult(resultBeans));
-
+                try{
+                    tv_today.setText(dealWithResult(resultBeans));
+                }catch (Exception e){
+                    CrashReport.postCatchedException(new Exception(e.getMessage()));
+                }
             }
 
             @Override
@@ -331,7 +337,20 @@ public class MainActivity extends AppCompatActivity {
             ValueBean valueBean = newList.get(i);
 
             for(int j =0; j<all.size(); j++){
+
                 if(all.get(j).getName().equals(valueBean.getName())){
+
+                    if(valueBean.getName().equals("其他")){
+                        if(!TextUtils.isEmpty(all.get(j).getInfo())){
+                            if(TextUtils.isEmpty(valueBean.getInfo())){
+                                valueBean.setInfo(all.get(j).getInfo());
+                            }else {
+                                valueBean.setInfo(valueBean.getInfo()+";"+all.get(j).getInfo());
+                            }
+                        }
+                        continue;
+                    }
+
                     LogUtils.d(TAG,"原始项1:"+new Gson().toJson(valueBean));
                     LogUtils.d(TAG,"累计项:"+new Gson().toJson(all.get(j)));
                     int allCount;
