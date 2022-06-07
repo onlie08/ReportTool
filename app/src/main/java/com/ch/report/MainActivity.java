@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 
+import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.SPUtils;
@@ -126,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         MyApplication.USER_NAME = userName;
-        title.setText("每日统计-"+userName);
+        title.setText("每日统计V"+ AppUtils.getAppVersionName()+"-"+MyApplication.USER_NAME);
         initTaskDate();
 
         SFUpdaterUtils.checkVersionOnly(MainActivity.this);
@@ -180,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
                     SPUtils.getInstance().put("userName",edit_name.getEditableText().toString());
                     SPUtils.getInstance().put("phone",edit_phone.getEditableText().toString());
                     MyApplication.USER_NAME = edit_name.getEditableText().toString();
-                    title.setText("每日统计-"+MyApplication.USER_NAME);
+                    title.setText("每日统计V"+ AppUtils.getAppVersionName()+"-"+MyApplication.USER_NAME);
                     dialog.dismiss();
                     initTaskDate();
                     if(exit){
@@ -387,7 +388,9 @@ public class MainActivity extends AppCompatActivity {
         Iterator<ValueBean> it = newList.iterator();
         while (it.hasNext()){
             ValueBean valueBean = it.next();
-            if(TextUtils.isEmpty(valueBean.getCount()) && TextUtils.isEmpty(valueBean.getValue())){
+            if(valueBean.getName().equals("其他") && !TextUtils.isEmpty(valueBean.getInfo())){
+
+            }else if(TextUtils.isEmpty(valueBean.getCount()) && TextUtils.isEmpty(valueBean.getValue())){
                 it.remove();
             }
         }
@@ -400,6 +403,9 @@ public class MainActivity extends AppCompatActivity {
             }
             if(!TextUtils.isEmpty(valueBean.getValue())){
                 stringBuffer.append(" ").append(valueBean.getValue()).append(valueBean.getValueUnit());
+            }
+            if(valueBean.getName().equals("其他") && !TextUtils.isEmpty(valueBean.getInfo())){
+                stringBuffer.append(" ").append(valueBean.getInfo());
             }
             stringBuffer.append("\n");
         }

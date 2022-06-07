@@ -1,5 +1,6 @@
 package com.ch.report.network;
 
+import com.blankj.utilcode.util.AppUtils;
 import com.ch.report.bean.ResultBean;
 import com.ch.report.bean.UserBean;
 import com.google.gson.Gson;
@@ -33,6 +34,7 @@ public class AVUtils {
         user_pay.put("other", new Gson().toJson(resultBean.getOthers()));
         user_pay.put("userName",resultBean.getUserName());
         user_pay.put("date",resultBean.getDate());
+        user_pay.put("version",AppUtils.getAppVersionName());
 
         user_pay.save();
     }
