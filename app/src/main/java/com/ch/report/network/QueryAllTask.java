@@ -49,7 +49,10 @@ public class QueryAllTask extends AsyncTask<String, Integer, ArrayList<ResultBea
             }
 
             LCQuery<LCObject> query = new LCQuery<>(AVUtils.tb_task);
-            query.whereEqualTo("date", queryDate);
+            if(!TextUtils.isEmpty(queryDate)){
+                query.whereEqualTo("date", queryDate);
+            }
+            query.limit(500);
             query.findInBackground().subscribe(new Observer<List<LCObject>>() {
                 public void onSubscribe(Disposable disposable) {}
                 public void onNext(List<LCObject> lcObjects) {
