@@ -8,7 +8,7 @@ pluginManagement {
         }
         maven {
             allowInsecureProtocol=true
-            url "http://artifactory.sf-express.com/artifactory/maven/"
+            url "https://artifactory.sf-express.com/artifactory/maven/"
         }
 
     }
@@ -23,7 +23,7 @@ dependencyResolutionManagement {
         }
         maven {
             allowInsecureProtocol=true
-            url "http://artifactory.sf-express.com/artifactory/maven/"
+            url "https://artifactory.sf-express.com/artifactory/maven/"
         }
     }
 }

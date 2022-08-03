@@ -5,6 +5,7 @@ import android.util.Log;
 
 
 import com.blankj.utilcode.util.TimeUtils;
+import com.ch.report.bean.NewResultBean;
 import com.ch.report.bean.ResultBean;
 import com.ch.report.bean.UserBean;
 import com.ch.report.network.InitTask;
@@ -22,6 +23,7 @@ public class MyApplication extends Application {
     public static String USER_NAME;
     public static String DATE;
     public static ResultBean RESULT_BEAN;
+    public static NewResultBean NEW_RESULT_BEAN;
     public static UserBean USER_BEAN;
     @Override
     public void onCreate() {

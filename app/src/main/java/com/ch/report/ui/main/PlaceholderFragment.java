@@ -32,6 +32,7 @@ import com.ch.report.bean.ValueBean;
 import com.ch.report.databinding.FragmentMainBinding;
 import com.ch.report.network.InitTask;
 import com.ch.report.network.ReportTask;
+import com.ch.report.network.ReportTaskNew;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
@@ -123,23 +124,7 @@ public class PlaceholderFragment extends Fragment {
             edit_count.setVisibility(View.GONE);
             tv_count_unit.setVisibility(View.GONE);
 
-        }else if(valueBean.getName().equals("借记卡")
-                ||valueBean.getName().equals("其中社保卡（新客）")
-                ||valueBean.getName().equals("特色卡")
-                ||valueBean.getName().equals("三方绑卡")
-                ||valueBean.getName().equals("其中信用卡三方绑卡")
-                ||valueBean.getName().equals("新规理财拓户")
-                ||valueBean.getName().equals("信用卡")
-                ||valueBean.getName().equals("其中获新客")
-                ||valueBean.getName().equals("商户新增")
-                ||valueBean.getName().equals("商户促活")
-                ||valueBean.getName().equals("手机银行")
-                ||valueBean.getName().equals("收费工银信使")
-                ||valueBean.getName().equals("企业银行手机银行动户")
-                ||valueBean.getName().equals("对公结算账户")
-                ||valueBean.getName().equals("三方存管")
-                ||valueBean.getName().equals("积存金")
-                ) {
+        }else if(valueBean.getCountUnit().equals("户") || valueBean.getCountUnit().equals("张")|| valueBean.getCountUnit().equals("克")) {
             edit_value.setVisibility(View.GONE);
             tv_value_unit.setVisibility(View.GONE);
             edit_count.setVisibility(View.VISIBLE);
@@ -232,7 +217,7 @@ public class PlaceholderFragment extends Fragment {
                 valueBean.setInfo(edit_info.getEditableText().toString());
             }
             dialog.dismiss();
-            new ReportTask(new ReportTask.CallBackListener() {
+            new ReportTaskNew(new ReportTaskNew.CallBackListener() {
                 @Override
                 public void onSuccess() {
                     adapter.notifyDataSetChanged();
@@ -242,7 +227,7 @@ public class PlaceholderFragment extends Fragment {
                 public void onFail(String msg) {
                     Toast.makeText(getActivity(), msg, Toast.LENGTH_LONG).show();
                 }
-            }, MyApplication.RESULT_BEAN).execute();
+            }, MyApplication.NEW_RESULT_BEAN).execute();
 //            new SetParentCodeTask(context).execute(edit_input.getText().toString().trim());
 //            RecommendCodeManage.getSingleton().getRecommendBean(edit_input.getText().toString());
         });

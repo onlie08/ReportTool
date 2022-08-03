@@ -7,6 +7,10 @@
     <string name="tab_text_5">网金</string>
     <string name="tab_text_6">对公</string>
     <string name="tab_text_7">其他</string>
+    <string name="tab_text_8">存款类</string>
+    <string name="tab_text_9">拓户类</string>
+    <string name="tab_text_10">产品类</string>
+    <string name="tab_text_11">贷款类</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>

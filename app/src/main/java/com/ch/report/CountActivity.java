@@ -2,6 +2,8 @@ package com.ch.report;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -10,9 +12,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.ch.report.bean.ResultBean;
+import com.ch.report.bean.NewResultBean;
 import com.ch.report.bean.ValueBean;
 import com.ch.report.network.QueryAllTask;
+import com.ch.report.network.QueryAllTaskNew;
 import com.google.gson.Gson;
 
 import java.math.BigDecimal;
@@ -27,9 +30,10 @@ public class CountActivity extends AppCompatActivity {
     private RadioButton radio_my;
     private RadioButton radio_my_all;
     private RadioButton radio_all;
-    private ArrayList<ResultBean> allResult = new ArrayList<>();
-    private ArrayList<ResultBean> myResult = new ArrayList<>();
-    private ArrayList<ResultBean> teamResult = new ArrayList<>();
+    private ImageView img_back;
+    private ArrayList<NewResultBean> allResult = new ArrayList<>();
+    private ArrayList<NewResultBean> myResult = new ArrayList<>();
+    private ArrayList<NewResultBean> teamResult = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +54,9 @@ public class CountActivity extends AppCompatActivity {
         String today = MyApplication.DATE;
         String month = today.substring(0, today.length() - 2) + "01";
         tv_date.setText("月统计：" + month + "至" + today);
-        new QueryAllTask(new QueryAllTask.CallBackListener() {
+        new QueryAllTaskNew(new QueryAllTaskNew.CallBackListener() {
             @Override
-            public void onSuccess(ArrayList<ResultBean> resultBeans) {
+            public void onSuccess(ArrayList<NewResultBean> resultBeans) {
                 LogUtils.d(TAG, "onSuccess:" + resultBeans.size());
                 if (null == resultBeans || resultBeans.isEmpty()) {
                     ToastUtils.showLong("无数据");
@@ -77,6 +81,13 @@ public class CountActivity extends AppCompatActivity {
         radio_my = findViewById(R.id.radio_my);
         radio_my_all = findViewById(R.id.radio_my_all);
         radio_all = findViewById(R.id.radio_all);
+        img_back = findViewById(R.id.img_back);
+        img_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         radio_group.setOnCheckedChangeListener((radioGroup, i) -> {
             LogUtils.d(TAG, "radio_group CheckedChange");
             if (radioGroup.getCheckedRadioButtonId() == R.id.radio_my) {
@@ -95,7 +106,7 @@ public class CountActivity extends AppCompatActivity {
     private void queryMyAll() {
         LogUtils.d(TAG, "queryMy");
         myResult.clear();
-        for(ResultBean resultBean : allResult){
+        for(NewResultBean resultBean : allResult){
             if(resultBean.getUserName().equals(MyApplication.USER_NAME)){
 //            if(resultBean.getUserName().equals("雷磊")){
                 myResult.add(resultBean);
@@ -103,7 +114,7 @@ public class CountActivity extends AppCompatActivity {
         }
 
         LogUtils.d(TAG, "myResult："+myResult.size());
-        for(ResultBean resultBean : myResult){
+        for(NewResultBean resultBean : myResult){
             resultBean.setDate(resultBean.getDate().replaceAll("-",""));
         }
 
@@ -111,9 +122,9 @@ public class CountActivity extends AppCompatActivity {
         String month = today.substring(0, today.length() - 2) + "01";
         int date = Integer.valueOf(month.replaceAll("-",""));
 
-        Iterator<ResultBean> iterator = myResult.iterator();
+        Iterator<NewResultBean> iterator = myResult.iterator();
         while (iterator.hasNext()){
-            ResultBean resultBean = iterator.next();
+            NewResultBean resultBean = iterator.next();
             int d = Integer.valueOf(resultBean.getDate());
             if(d < date){
                 LogUtils.d(TAG, "移除："+resultBean.getDate());
@@ -128,14 +139,14 @@ public class CountActivity extends AppCompatActivity {
     private void queryMy() {
         LogUtils.d(TAG, "queryMy");
         myResult.clear();
-        for(ResultBean resultBean : allResult){
+        for(NewResultBean resultBean : allResult){
             if(resultBean.getUserName().equals(MyApplication.USER_NAME)){
 //            if(resultBean.getUserName().equals("雷磊")){
                 myResult.add(resultBean);
             }
         }
         LogUtils.d(TAG, "myResult："+myResult.size());
-        for(ResultBean resultBean : myResult){
+        for(NewResultBean resultBean : myResult){
             resultBean.setDate(resultBean.getDate().replaceAll("-",""));
         }
 
@@ -143,9 +154,9 @@ public class CountActivity extends AppCompatActivity {
         String month = today.substring(0, today.length() - 2) + "01";
         int date = Integer.valueOf(month.replaceAll("-",""));
 
-        Iterator<ResultBean> iterator = myResult.iterator();
+        Iterator<NewResultBean> iterator = myResult.iterator();
         while (iterator.hasNext()){
-            ResultBean resultBean = iterator.next();
+            NewResultBean resultBean = iterator.next();
             int d = Integer.valueOf(resultBean.getDate());
             if(d < date){
                 LogUtils.d(TAG, "移除："+resultBean.getDate());
@@ -155,7 +166,7 @@ public class CountActivity extends AppCompatActivity {
         LogUtils.d(TAG, "myResult："+myResult.size());
 
         StringBuffer stringBuffer = new StringBuffer();
-        for(ResultBean resultBean : myResult){
+        for(NewResultBean resultBean : myResult){
             stringBuffer.append(resultBean.getDate()).append("\n");
             stringBuffer.append(getInfos(resultBean));
         }
@@ -166,11 +177,11 @@ public class CountActivity extends AppCompatActivity {
     private void queryAll() {
         LogUtils.d(TAG, "queryAll");
         myResult.clear();
-        for(ResultBean resultBean : allResult){
+        for(NewResultBean resultBean : allResult){
             myResult.add(resultBean);
         }
         LogUtils.d(TAG, "myResult："+myResult.size());
-        for(ResultBean resultBean : myResult){
+        for(NewResultBean resultBean : myResult){
             resultBean.setDate(resultBean.getDate().replaceAll("-",""));
         }
 
@@ -178,9 +189,9 @@ public class CountActivity extends AppCompatActivity {
         String month = today.substring(0, today.length() - 2) + "01";
         int date = Integer.valueOf(month.replaceAll("-",""));
 
-        Iterator<ResultBean> iterator = myResult.iterator();
+        Iterator<NewResultBean> iterator = myResult.iterator();
         while (iterator.hasNext()){
-            ResultBean resultBean = iterator.next();
+            NewResultBean resultBean = iterator.next();
             int d = Integer.valueOf(resultBean.getDate());
             if(d < date){
                 LogUtils.d(TAG, "移除："+resultBean.getDate());
@@ -192,16 +203,14 @@ public class CountActivity extends AppCompatActivity {
         tv_result.setText(dealWithResult(myResult));
     }
 
-    private String getInfos(ResultBean resultBean) {
+    private String getInfos(NewResultBean resultBean) {
         StringBuffer stringBuffer = new StringBuffer();
         ArrayList<ValueBean> valueBeans = new ArrayList<>();
-        if(null != resultBean.getCashs()) valueBeans.addAll(resultBean.getCashs());
-        if(null != resultBean.getCards()) valueBeans.addAll(resultBean.getCards());
-        if(null != resultBean.getImportants()) valueBeans.addAll(resultBean.getImportants());
-        if(null != resultBean.getXingYongKa()) valueBeans.addAll(resultBean.getXingYongKa());
-        if(null != resultBean.getWangJins()) valueBeans.addAll(resultBean.getWangJins());
-        if(null != resultBean.getDuiGong()) valueBeans.addAll(resultBean.getDuiGong());
-        if(null != resultBean.getOthers()) valueBeans.addAll(resultBean.getOthers());
+        if(null != resultBean.getCunKuan()) valueBeans.addAll(resultBean.getCunKuan());
+        if(null != resultBean.getTuoHu()) valueBeans.addAll(resultBean.getTuoHu());
+        if(null != resultBean.getChanPin()) valueBeans.addAll(resultBean.getChanPin());
+        if(null != resultBean.getDaiKuan()) valueBeans.addAll(resultBean.getDaiKuan());
+        if(null != resultBean.getQiTa()) valueBeans.addAll(resultBean.getQiTa());
 
         for (ValueBean valueBean : valueBeans) {
             if (TextUtils.isEmpty(valueBean.getCount()) && TextUtils.isEmpty(valueBean.getValue()) && TextUtils.isEmpty(valueBean.getInfo())) {
@@ -227,40 +236,30 @@ public class CountActivity extends AppCompatActivity {
         return stringBuffer.toString();
     }
 
-    private String dealWithResult(ArrayList<ResultBean> resultBeans) {
+    private String dealWithResult(ArrayList<NewResultBean> resultBeans) {
         ArrayList<ValueBean> all = new ArrayList<>();
-        for(ResultBean resultBean : resultBeans){
-            for(ValueBean valueBean : resultBean.getCards()){
+        for(NewResultBean resultBean : resultBeans){
+            for(ValueBean valueBean : resultBean.getCunKuan()){
                 if(!TextUtils.isEmpty(valueBean.getValue()) || !TextUtils.isEmpty(valueBean.getCount())){
                     all.add(valueBean);
                 }
             }
-            for(ValueBean valueBean : resultBean.getCashs()){
+            for(ValueBean valueBean : resultBean.getTuoHu()){
                 if(!TextUtils.isEmpty(valueBean.getValue()) || !TextUtils.isEmpty(valueBean.getCount())){
                     all.add(valueBean);
                 }
             }
-            for(ValueBean valueBean : resultBean.getImportants()){
+            for(ValueBean valueBean : resultBean.getChanPin()){
                 if(!TextUtils.isEmpty(valueBean.getValue()) || !TextUtils.isEmpty(valueBean.getCount())){
                     all.add(valueBean);
                 }
             }
-            for(ValueBean valueBean : resultBean.getDuiGong()){
+            for(ValueBean valueBean : resultBean.getDaiKuan()){
                 if(!TextUtils.isEmpty(valueBean.getValue()) || !TextUtils.isEmpty(valueBean.getCount())){
                     all.add(valueBean);
                 }
             }
-            for(ValueBean valueBean : resultBean.getWangJins()){
-                if(!TextUtils.isEmpty(valueBean.getValue()) || !TextUtils.isEmpty(valueBean.getCount())){
-                    all.add(valueBean);
-                }
-            }
-            for(ValueBean valueBean : resultBean.getXingYongKa()){
-                if(!TextUtils.isEmpty(valueBean.getValue()) || !TextUtils.isEmpty(valueBean.getCount())){
-                    all.add(valueBean);
-                }
-            }
-            for(ValueBean valueBean : resultBean.getOthers()){
+            for(ValueBean valueBean : resultBean.getQiTa()){
                 if(!TextUtils.isEmpty(valueBean.getInfo())){
                     all.add(valueBean);
                 }
@@ -355,240 +354,239 @@ public class CountActivity extends AppCompatActivity {
     private ArrayList<ValueBean> getAllValues() {
         ArrayList<ValueBean> allValues = new ArrayList<>();
 
-        ArrayList<ValueBean> cashs = new ArrayList<>();
+        ArrayList<ValueBean> cunKuan = new ArrayList<>();
         ValueBean valueBean = new ValueBean();
         valueBean.setType(1);
-        valueBean.setName("个人预约揽存");
+        valueBean.setName("定期到期转存");
         valueBean.setCountUnit("笔");
         valueBean.setValueUnit("万元");
-        cashs.add(valueBean);
+        cunKuan.add(valueBean);
 
         valueBean = new ValueBean();
         valueBean.setType(1);
-        valueBean.setName("活期转换");
+        valueBean.setName("活期转定期");
         valueBean.setCountUnit("笔");
         valueBean.setValueUnit("万元");
-        cashs.add(valueBean);
+        cunKuan.add(valueBean);
 
         valueBean = new ValueBean();
         valueBean.setType(1);
-        valueBean.setName("结构回调");
+        valueBean.setName("他行/区外挖转");
         valueBean.setCountUnit("笔");
         valueBean.setValueUnit("万元");
-        cashs.add(valueBean);
-
-        valueBean = new ValueBean();
-        valueBean.setType(1);
-        valueBean.setName("柜面稳存");
-        valueBean.setCountUnit("笔");
-        valueBean.setValueUnit("万元");
-        cashs.add(valueBean);
-
-        valueBean = new ValueBean();
-        valueBean.setType(1);
-        valueBean.setName("他行挖转");
-        valueBean.setCountUnit("笔");
-        valueBean.setValueUnit("万元");
-        cashs.add(valueBean);
-
-        valueBean = new ValueBean();
-        valueBean.setType(1);
-        valueBean.setName("慧享交易金额");
-        valueBean.setCountUnit("笔");
-        valueBean.setValueUnit("万元");
-        cashs.add(valueBean);
-        allValues.addAll(cashs);
+        cunKuan.add(valueBean);
+        allValues.addAll(cunKuan);
 
         /////////////////////////////
-        ArrayList<ValueBean> cards = new ArrayList<>();
+        ArrayList<ValueBean> tuoHu = new ArrayList<>();
 
         valueBean = new ValueBean();
         valueBean.setType(2);
-        valueBean.setName("借记卡");
+        valueBean.setName("特色借记卡");
         valueBean.setCountUnit("张");
         valueBean.setValueUnit("万元");
-        cards.add(valueBean);
+        tuoHu.add(valueBean);
 
         valueBean = new ValueBean();
         valueBean.setType(2);
-        valueBean.setName("其中社保卡（新客）");
+        valueBean.setName("社保卡");
         valueBean.setCountUnit("张");
         valueBean.setValueUnit("万元");
-        cards.add(valueBean);
+        tuoHu.add(valueBean);
 
         valueBean = new ValueBean();
         valueBean.setType(2);
-        valueBean.setName("特色卡");
-        valueBean.setCountUnit("张");
+        valueBean.setName("信用卡新客户净增");
+        valueBean.setCountUnit("户");
         valueBean.setValueUnit("万元");
-        cards.add(valueBean);
+        tuoHu.add(valueBean);
 
         valueBean = new ValueBean();
         valueBean.setType(2);
-        valueBean.setName("三方绑卡");
-        valueBean.setCountUnit("张");
+        valueBean.setName("有效商户净增");
+        valueBean.setCountUnit("户");
         valueBean.setValueUnit("万元");
-        cards.add(valueBean);
+        tuoHu.add(valueBean);
 
         valueBean = new ValueBean();
         valueBean.setType(2);
-        valueBean.setName("其中信用卡三方绑卡");
-        valueBean.setCountUnit("张");
+        valueBean.setName("对公结算账户");
+        valueBean.setCountUnit("户");
         valueBean.setValueUnit("万元");
-        cards.add(valueBean);
-        allValues.addAll(cards);
+        tuoHu.add(valueBean);
+
+        valueBean = new ValueBean();
+        valueBean.setType(2);
+        valueBean.setName("个人/小微企业有贷户");
+        valueBean.setCountUnit("户");
+        valueBean.setValueUnit("万元");
+        tuoHu.add(valueBean);
+
+        valueBean = new ValueBean();
+        valueBean.setType(2);
+        valueBean.setName("票据贴现客户");
+        valueBean.setCountUnit("户");
+        valueBean.setValueUnit("万元");
+        tuoHu.add(valueBean);
+
+        valueBean = new ValueBean();
+        valueBean.setType(2);
+        valueBean.setName("国际业务客户");
+        valueBean.setCountUnit("户");
+        valueBean.setValueUnit("万元");
+        tuoHu.add(valueBean);
+        allValues.addAll(tuoHu);
 
         /////////////////////////////
-        ArrayList<ValueBean> importants = new ArrayList<>();
+        ArrayList<ValueBean> chanPin = new ArrayList<>();
 
         valueBean = new ValueBean();
         valueBean.setType(3);
-        valueBean.setName("新规理财拓户");
+        valueBean.setName("借记卡三方绑卡");
+        valueBean.setCountUnit("张");
+        valueBean.setValueUnit("万元");
+        chanPin.add(valueBean);
+
+        valueBean = new ValueBean();
+        valueBean.setType(3);
+        valueBean.setName("信用卡三方绑卡");
+        valueBean.setCountUnit("张");
+        valueBean.setValueUnit("万元");
+        chanPin.add(valueBean);
+
+        valueBean = new ValueBean();
+        valueBean.setType(3);
+        valueBean.setName("收费工银信使");
         valueBean.setCountUnit("户");
         valueBean.setValueUnit("万元");
-        importants.add(valueBean);
+        chanPin.add(valueBean);
 
         valueBean = new ValueBean();
         valueBean.setType(3);
         valueBean.setName("个人理财");
         valueBean.setCountUnit("笔");
         valueBean.setValueUnit("万元");
-        importants.add(valueBean);
+        chanPin.add(valueBean);
+
+        valueBean = new ValueBean();
+        valueBean.setType(3);
+        valueBean.setName("非货币基金");
+        valueBean.setCountUnit("笔");
+        valueBean.setValueUnit("万元");
+        chanPin.add(valueBean);
 
         valueBean = new ValueBean();
         valueBean.setType(3);
         valueBean.setName("期交保险");
         valueBean.setCountUnit("笔");
         valueBean.setValueUnit("万元");
-        importants.add(valueBean);
+        chanPin.add(valueBean);
 
         valueBean = new ValueBean();
         valueBean.setType(3);
         valueBean.setName("趸交保险");
         valueBean.setCountUnit("笔");
         valueBean.setValueUnit("万元");
-        importants.add(valueBean);
+        chanPin.add(valueBean);
 
         valueBean = new ValueBean();
         valueBean.setType(3);
-        valueBean.setName("货币基金");
-        valueBean.setCountUnit("笔");
+        valueBean.setName("个人手机银行净增");
+        valueBean.setCountUnit("户");
         valueBean.setValueUnit("万元");
-        importants.add(valueBean);
-        allValues.addAll(importants);
+        chanPin.add(valueBean);
+
+        valueBean = new ValueBean();
+        valueBean.setType(3);
+        valueBean.setName("企业手机银行净增");
+        valueBean.setCountUnit("户");
+        valueBean.setValueUnit("万元");
+        chanPin.add(valueBean);
+
+        valueBean = new ValueBean();
+        valueBean.setType(3);
+        valueBean.setName("企业网银净增");
+        valueBean.setCountUnit("户");
+        valueBean.setValueUnit("万元");
+        chanPin.add(valueBean);
+
+        valueBean = new ValueBean();
+        valueBean.setType(3);
+        valueBean.setName("三方存管");
+        valueBean.setCountUnit("户");
+        valueBean.setValueUnit("万元");
+        chanPin.add(valueBean);
+
+        valueBean = new ValueBean();
+        valueBean.setType(3);
+        valueBean.setName("电子医保凭证");
+        valueBean.setCountUnit("户");
+        valueBean.setValueUnit("万元");
+        chanPin.add(valueBean);
+
+        valueBean = new ValueBean();
+        valueBean.setType(3);
+        valueBean.setName("积存金");
+        valueBean.setCountUnit("户");
+        valueBean.setValueUnit("万元");
+        chanPin.add(valueBean);
+
+        valueBean = new ValueBean();
+        valueBean.setType(3);
+        valueBean.setName("实物黄金");
+        valueBean.setCountUnit("克");
+        valueBean.setValueUnit("万元");
+        chanPin.add(valueBean);
+        allValues.addAll(chanPin);
 
         /////////////////////////////
-        ArrayList<ValueBean> xingYongKas = new ArrayList<>();
+        ArrayList<ValueBean> daiKuan = new ArrayList<>();
 
         valueBean = new ValueBean();
         valueBean.setType(4);
-        valueBean.setName("信用卡");
-        valueBean.setCountUnit("张");
+        valueBean.setName("个人非房贷贷款");
+        valueBean.setCountUnit("笔");
         valueBean.setValueUnit("万元");
-        xingYongKas.add(valueBean);
+        daiKuan.add(valueBean);
 
         valueBean = new ValueBean();
         valueBean.setType(4);
-        valueBean.setName("其中获新客");
-        valueBean.setCountUnit("户");
+        valueBean.setName("小企业贷款");
+        valueBean.setCountUnit("笔");
         valueBean.setValueUnit("万元");
-        xingYongKas.add(valueBean);
+        daiKuan.add(valueBean);
 
         valueBean = new ValueBean();
         valueBean.setType(4);
-        valueBean.setName("商户新增");
-        valueBean.setCountUnit("户");
+        valueBean.setName("融E借");
+        valueBean.setCountUnit("笔");
         valueBean.setValueUnit("万元");
-        xingYongKas.add(valueBean);
-
-        valueBean = new ValueBean();
-        valueBean.setType(4);
-        valueBean.setName("商户促活");
-        valueBean.setCountUnit("户");
-        valueBean.setValueUnit("万元");
-        xingYongKas.add(valueBean);
+        daiKuan.add(valueBean);
 
         valueBean = new ValueBean();
         valueBean.setType(4);
         valueBean.setName("E分期");
         valueBean.setCountUnit("笔");
         valueBean.setValueUnit("万元");
-        xingYongKas.add(valueBean);
-        allValues.addAll(xingYongKas);
-
-        /////////////////////////////
-        ArrayList<ValueBean> wangJins = new ArrayList<>();
+        daiKuan.add(valueBean);
 
         valueBean = new ValueBean();
-        valueBean.setType(5);
-        valueBean.setName("手机银行");
-        valueBean.setCountUnit("户");
-        valueBean.setValueUnit("万元");
-        wangJins.add(valueBean);
-
-        valueBean = new ValueBean();
-        valueBean.setType(5);
-        valueBean.setName("收费工银信使");
-        valueBean.setCountUnit("户");
-        valueBean.setValueUnit("万元");
-        wangJins.add(valueBean);
-
-        valueBean = new ValueBean();
-        valueBean.setType(5);
-        valueBean.setName("企业银行手机银行动户");
-        valueBean.setCountUnit("户");
-        valueBean.setValueUnit("万元");
-        wangJins.add(valueBean);
-        allValues.addAll(wangJins);
-
-        /////////////////////////////
-        ArrayList<ValueBean> duiGongs = new ArrayList<>();
-
-        valueBean = new ValueBean();
-        valueBean.setType(6);
-        valueBean.setName("公司存款");
+        valueBean.setType(4);
+        valueBean.setName("票据贴现");
         valueBean.setCountUnit("笔");
         valueBean.setValueUnit("万元");
-        duiGongs.add(valueBean);
-
-        valueBean = new ValueBean();
-        valueBean.setType(6);
-        valueBean.setName("机构存款");
-        valueBean.setCountUnit("笔");
-        valueBean.setValueUnit("万元");
-        duiGongs.add(valueBean);
-
-        valueBean = new ValueBean();
-        valueBean.setType(6);
-        valueBean.setName("对公结算账户");
-        valueBean.setCountUnit("户");
-        valueBean.setValueUnit("万元");
-        duiGongs.add(valueBean);
-
-        valueBean = new ValueBean();
-        valueBean.setType(6);
-        valueBean.setName("三方存管");
-        valueBean.setCountUnit("户");
-        valueBean.setValueUnit("万元");
-        duiGongs.add(valueBean);
-
-        valueBean = new ValueBean();
-        valueBean.setType(6);
-        valueBean.setName("积存金");
-        valueBean.setCountUnit("户");
-        valueBean.setValueUnit("万元");
-        duiGongs.add(valueBean);
-        allValues.addAll(duiGongs);
+        daiKuan.add(valueBean);
+        allValues.addAll(daiKuan);
 
         /////////////////////////////
-        ArrayList<ValueBean> others = new ArrayList<>();
+        ArrayList<ValueBean> qiTa = new ArrayList<>();
         valueBean = new ValueBean();
-        valueBean.setType(7);
+        valueBean.setType(5);
         valueBean.setName("其他");
         valueBean.setCountUnit("笔");
         valueBean.setValueUnit("万元");
-        others.add(valueBean);
-        allValues.addAll(others);
+        qiTa.add(valueBean);
+        allValues.addAll(qiTa);
 
         return allValues;
     }
