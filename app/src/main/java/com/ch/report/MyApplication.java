@@ -10,8 +10,8 @@ import com.ch.report.bean.ResultBean;
 import com.ch.report.bean.UserBean;
 import com.ch.report.network.InitTask;
 import com.ch.report.network.SFUpdaterUtils;
-import com.sf.appupdater.log.LogInfo;
-import com.sf.appupdater.log.LogWriter;
+//import com.sf.appupdater.log.LogInfo;
+//import com.sf.appupdater.log.LogWriter;
 import com.tencent.bugly.crashreport.CrashReport;
 
 import java.text.SimpleDateFormat;
@@ -30,16 +30,17 @@ public class MyApplication extends Application {
         super.onCreate();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         DATE = TimeUtils.getNowString(formatter).substring(0, 10);
+        Log.d("CAOHAI","DATE:"+DATE);
         initLeancloud();
         CrashReport.initCrashReport(getApplicationContext(), "f259127a9c", BuildConfig.DEBUG);
 
-        LogWriter logWriter = new LogWriter() {
-            @Override
-            public void write(LogInfo logInfo) {
-                Log.d("logInfo", "logInfo: " + logInfo);
-            }
-        };
-        SFUpdaterUtils.setAppUpdaterInfo(this, "226e144b0fa7571223666a6877d28ad2", "49fda4f1f7e74502a69955f83548b455", true, com.sf.appupdater.Environment.PRODUCTION, false, logWriter);
+//        LogWriter logWriter = new LogWriter() {
+//            @Override
+//            public void write(LogInfo logInfo) {
+//                Log.d("logInfo", "logInfo: " + logInfo);
+//            }
+//        };
+//        SFUpdaterUtils.setAppUpdaterInfo(this, "226e144b0fa7571223666a6877d28ad2", "49fda4f1f7e74502a69955f83548b455", true, com.sf.appupdater.Environment.PRODUCTION, false, logWriter);
     }
 
     private void initLeancloud() {

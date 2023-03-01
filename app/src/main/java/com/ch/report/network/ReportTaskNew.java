@@ -54,7 +54,7 @@ public class ReportTaskNew extends AsyncTask<String, Integer, NewResultBean> {
 //            todo.put("xingYongKa", new Gson().toJson(resultBean.getXingYongKa()));
 //            todo.put("wangJin", new Gson().toJson(resultBean.getWangJins()));
 
-            LCQuery<LCObject> query = new LCQuery<>(AVUtils.tb_task_new);
+            LCQuery<LCObject> query = new LCQuery<>(AVUtils.getTb_name());
             query.whereEqualTo("userName", userName);
             query.whereEqualTo("date", MyApplication.DATE);
             LCObject todo = query.getFirst();

@@ -48,7 +48,7 @@ public class QueryAllTaskNew extends AsyncTask<String, Integer, ArrayList<NewRes
                 return null;
             }
 
-            LCQuery<LCObject> query = new LCQuery<>(AVUtils.tb_task_new);
+            LCQuery<LCObject> query = new LCQuery<>(AVUtils.getTb_name());
             if(!TextUtils.isEmpty(queryDate)){
                 query.whereEqualTo("date", queryDate);
             }

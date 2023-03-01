@@ -435,6 +435,13 @@ public class CountActivity extends AppCompatActivity {
         valueBean.setCountUnit("户");
         valueBean.setValueUnit("万元");
         tuoHu.add(valueBean);
+
+        valueBean = new ValueBean();
+        valueBean.setType(2);
+        valueBean.setName("代发工资客户");
+        valueBean.setCountUnit("户");
+        valueBean.setValueUnit("万元");
+        tuoHu.add(valueBean);
         allValues.addAll(tuoHu);
 
         /////////////////////////////
@@ -443,13 +450,6 @@ public class CountActivity extends AppCompatActivity {
         valueBean = new ValueBean();
         valueBean.setType(3);
         valueBean.setName("借记卡三方绑卡");
-        valueBean.setCountUnit("张");
-        valueBean.setValueUnit("万元");
-        chanPin.add(valueBean);
-
-        valueBean = new ValueBean();
-        valueBean.setType(3);
-        valueBean.setName("信用卡三方绑卡");
         valueBean.setCountUnit("张");
         valueBean.setValueUnit("万元");
         chanPin.add(valueBean);
@@ -537,6 +537,20 @@ public class CountActivity extends AppCompatActivity {
         valueBean.setCountUnit("克");
         valueBean.setValueUnit("万元");
         chanPin.add(valueBean);
+
+        valueBean = new ValueBean();
+        valueBean.setType(3);
+        valueBean.setName("个人养老金账户");
+        valueBean.setCountUnit("户");
+        valueBean.setValueUnit("万元");
+        chanPin.add(valueBean);
+
+        valueBean = new ValueBean();
+        valueBean.setType(3);
+        valueBean.setName("e钱包");
+        valueBean.setCountUnit("户");
+        valueBean.setValueUnit("万元");
+        chanPin.add(valueBean);
         allValues.addAll(chanPin);
 
         /////////////////////////////
@@ -573,6 +587,13 @@ public class CountActivity extends AppCompatActivity {
         valueBean = new ValueBean();
         valueBean.setType(4);
         valueBean.setName("票据贴现");
+        valueBean.setCountUnit("笔");
+        valueBean.setValueUnit("万元");
+        daiKuan.add(valueBean);
+
+        valueBean = new ValueBean();
+        valueBean.setType(4);
+        valueBean.setName("对公存款");
         valueBean.setCountUnit("笔");
         valueBean.setValueUnit("万元");
         daiKuan.add(valueBean);

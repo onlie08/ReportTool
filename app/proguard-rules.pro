@@ -20,12 +20,12 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
-# SDK自身混淆规则
--keep class com.sf.appupdater.entity.** { *; }
--keep class * extends com.sf.appupdater.tinkerpatch.app.HotfixApplicationProxy{ *; }
--keep class * extends com.sf.appupdater.tinkerpatch.app.HotFixApplication{ *; }
--dontwarn com.sf.appupdater.tinkerpatch.**
-
+## SDK自身混淆规则
+#-keep class com.sf.appupdater.entity.** { *; }
+#-keep class * extends com.sf.appupdater.tinkerpatch.app.HotfixApplicationProxy{ *; }
+#-keep class * extends com.sf.appupdater.tinkerpatch.app.HotFixApplication{ *; }
+#-dontwarn com.sf.appupdater.tinkerpatch.**
+#
 
 # OkHttp混淆规则
 -dontwarn okhttp3.**
@@ -36,7 +36,7 @@
 # Gson混淆规则
 -keepattributes Signature
 -keepattributes *Annotation*
--keep class sun.misc.Unsafe { *; }
+#-keep class sun.misc.Unsafe { *; }
 -keep class * implements com.google.gson.TypeAdapterFactory
 -keep class * implements com.google.gson.JsonSerializer
 -keep class * implements com.google.gson.JsonDeserializer

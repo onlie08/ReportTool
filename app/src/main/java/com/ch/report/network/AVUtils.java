@@ -1,6 +1,9 @@
 package com.ch.report.network;
 
+import android.util.Log;
+
 import com.blankj.utilcode.util.AppUtils;
+import com.ch.report.MyApplication;
 import com.ch.report.bean.NewResultBean;
 import com.ch.report.bean.ResultBean;
 import com.ch.report.bean.UserBean;
@@ -20,6 +23,13 @@ public class AVUtils {
         user_pay.put("userName", userName);
         user_pay.save();
     }
+
+    public static String getTb_name(){
+        String month = MyApplication.DATE.substring(5,7);
+        Log.d("CAOHAI","month:"+ month);
+        return "tb_task_"+month;
+    }
+
 
     /**
      * 注册上报表
@@ -45,7 +55,7 @@ public class AVUtils {
      * @param
      */
     public static void registReportNew(NewResultBean resultBean) {
-        LCObject user_pay = new LCObject(AVUtils.tb_task_new);
+        LCObject user_pay = new LCObject(AVUtils.getTb_name());
         user_pay.put("cunKuan", new Gson().toJson(resultBean.getCunKuan()));
         user_pay.put("tuoHu", new Gson().toJson(resultBean.getTuoHu()));
         user_pay.put("chanPin", new Gson().toJson(resultBean.getChanPin()));

@@ -41,6 +41,7 @@ import com.ch.report.databinding.ActivityMainBinding;
 import com.google.gson.Gson;
 import com.tencent.bugly.crashreport.CrashReport;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
@@ -131,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
         title.setText("每日统计V"+ AppUtils.getAppVersionName()+"-"+MyApplication.USER_NAME);
         initTaskDate();
 
-        SFUpdaterUtils.checkVersionOnly(MainActivity.this);
+//        SFUpdaterUtils.checkVersionOnly(MainActivity.this);
 //        SFUpdaterUtils.checkNewVersion(MainActivity.this);
 //        new Handler().postDelayed(() -> SFUpdaterUtils.checkVersion(MainActivity.this),1000);
     }
@@ -368,8 +369,10 @@ public class MainActivity extends AppCompatActivity {
                     if(!TextUtils.isEmpty(all.get(j).getValue())){
                         allValue += Double.valueOf(all.get(j).getValue());
                     }
-                    if(allValue != 0){
-                        valueBean.setValue(String.valueOf(allValue));
+                    BigDecimal b = new BigDecimal(allValue);
+                    double newValue = b.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+                    if(newValue != 0){
+                        valueBean.setValue(String.valueOf(newValue));
                     }
                     LogUtils.d(TAG,"原始项2:"+new Gson().toJson(valueBean));
                 }
@@ -490,6 +493,13 @@ public class MainActivity extends AppCompatActivity {
         valueBean.setCountUnit("户");
         valueBean.setValueUnit("万元");
         tuoHu.add(valueBean);
+
+        valueBean = new ValueBean();
+        valueBean.setType(2);
+        valueBean.setName("代发工资客户");
+        valueBean.setCountUnit("户");
+        valueBean.setValueUnit("万元");
+        tuoHu.add(valueBean);
         allValues.addAll(tuoHu);
 
         /////////////////////////////
@@ -498,13 +508,6 @@ public class MainActivity extends AppCompatActivity {
         valueBean = new ValueBean();
         valueBean.setType(3);
         valueBean.setName("借记卡三方绑卡");
-        valueBean.setCountUnit("张");
-        valueBean.setValueUnit("万元");
-        chanPin.add(valueBean);
-
-        valueBean = new ValueBean();
-        valueBean.setType(3);
-        valueBean.setName("信用卡三方绑卡");
         valueBean.setCountUnit("张");
         valueBean.setValueUnit("万元");
         chanPin.add(valueBean);
@@ -592,6 +595,20 @@ public class MainActivity extends AppCompatActivity {
         valueBean.setCountUnit("克");
         valueBean.setValueUnit("万元");
         chanPin.add(valueBean);
+
+        valueBean = new ValueBean();
+        valueBean.setType(3);
+        valueBean.setName("个人养老金账户");
+        valueBean.setCountUnit("户");
+        valueBean.setValueUnit("万元");
+        chanPin.add(valueBean);
+
+        valueBean = new ValueBean();
+        valueBean.setType(3);
+        valueBean.setName("e钱包");
+        valueBean.setCountUnit("户");
+        valueBean.setValueUnit("万元");
+        chanPin.add(valueBean);
         allValues.addAll(chanPin);
 
         /////////////////////////////
@@ -628,6 +645,13 @@ public class MainActivity extends AppCompatActivity {
         valueBean = new ValueBean();
         valueBean.setType(4);
         valueBean.setName("票据贴现");
+        valueBean.setCountUnit("笔");
+        valueBean.setValueUnit("万元");
+        daiKuan.add(valueBean);
+
+        valueBean = new ValueBean();
+        valueBean.setType(4);
+        valueBean.setName("对公存款");
         valueBean.setCountUnit("笔");
         valueBean.setValueUnit("万元");
         daiKuan.add(valueBean);

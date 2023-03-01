@@ -42,7 +42,7 @@ public class InitTaskNew extends AsyncTask<String, Integer, NewResultBean> {
                 return null;
             }
             // 查询是否存在某设备
-            LCQuery<LCObject> query = new LCQuery<>(AVUtils.tb_task_new);
+            LCQuery<LCObject> query = new LCQuery<>(AVUtils.getTb_name());
             query.whereEqualTo("userName", userName);
             query.whereEqualTo("date", MyApplication.DATE);
             LCObject obj = query.getFirst();
@@ -159,6 +159,13 @@ public class InitTaskNew extends AsyncTask<String, Integer, NewResultBean> {
         valueBean.setCountUnit("户");
         valueBean.setValueUnit("万元");
         tuoHu.add(valueBean);
+
+        valueBean = new ValueBean();
+        valueBean.setType(2);
+        valueBean.setName("代发工资客户");
+        valueBean.setCountUnit("户");
+        valueBean.setValueUnit("万元");
+        tuoHu.add(valueBean);
         resultBean.setTuoHu(tuoHu);
 
         /////////////////////////////
@@ -167,13 +174,6 @@ public class InitTaskNew extends AsyncTask<String, Integer, NewResultBean> {
         valueBean = new ValueBean();
         valueBean.setType(3);
         valueBean.setName("借记卡三方绑卡");
-        valueBean.setCountUnit("张");
-        valueBean.setValueUnit("万元");
-        chanPin.add(valueBean);
-
-        valueBean = new ValueBean();
-        valueBean.setType(3);
-        valueBean.setName("信用卡三方绑卡");
         valueBean.setCountUnit("张");
         valueBean.setValueUnit("万元");
         chanPin.add(valueBean);
@@ -261,6 +261,20 @@ public class InitTaskNew extends AsyncTask<String, Integer, NewResultBean> {
         valueBean.setCountUnit("克");
         valueBean.setValueUnit("万元");
         chanPin.add(valueBean);
+
+        valueBean = new ValueBean();
+        valueBean.setType(3);
+        valueBean.setName("个人养老金账户");
+        valueBean.setCountUnit("户");
+        valueBean.setValueUnit("万元");
+        chanPin.add(valueBean);
+
+        valueBean = new ValueBean();
+        valueBean.setType(3);
+        valueBean.setName("e钱包");
+        valueBean.setCountUnit("户");
+        valueBean.setValueUnit("万元");
+        chanPin.add(valueBean);
         resultBean.setChanPin(chanPin);
 
         /////////////////////////////
@@ -297,6 +311,13 @@ public class InitTaskNew extends AsyncTask<String, Integer, NewResultBean> {
         valueBean = new ValueBean();
         valueBean.setType(4);
         valueBean.setName("票据贴现");
+        valueBean.setCountUnit("笔");
+        valueBean.setValueUnit("万元");
+        daiKuan.add(valueBean);
+
+        valueBean = new ValueBean();
+        valueBean.setType(4);
+        valueBean.setName("对公存款");
         valueBean.setCountUnit("笔");
         valueBean.setValueUnit("万元");
         daiKuan.add(valueBean);

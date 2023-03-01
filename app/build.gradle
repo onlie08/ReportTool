@@ -9,8 +9,8 @@ android {
         applicationId "com.ch.report"
         minSdk 22
         targetSdk 31
-        versionCode 27
-        versionName "2.7"
+        versionCode 30
+        versionName "3.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -74,7 +74,7 @@ dependencies {
 //    implementation 'com.android.support:recyclerview-v7:31.0.0'
     implementation 'com.blankj:utilcodex:1.31.0'
     implementation 'com.tencent.bugly:crashreport:2.6.6.1'
-    implementation ('com.sf.andlibrary:sf-appupdater-sdk:2.0.0'){
-        exclude group: 'com.tencent.tinker', module: 'tinker-android-lib'
-    }
+//    implementation ('com.sf.andlibrary:sf-appupdater-sdk:2.0.0'){
+//        exclude group: 'com.tencent.tinker', module: 'tinker-android-lib'
+//    }
 }
