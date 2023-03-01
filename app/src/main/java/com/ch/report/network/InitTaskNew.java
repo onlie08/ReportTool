@@ -99,6 +99,13 @@ public class InitTaskNew extends AsyncTask<String, Integer, NewResultBean> {
         valueBean.setCountUnit("笔");
         valueBean.setValueUnit("万元");
         cunKuan.add(valueBean);
+
+        valueBean = new ValueBean();
+        valueBean.setType(1);
+        valueBean.setName("对公存款");
+        valueBean.setCountUnit("笔");
+        valueBean.setValueUnit("万元");
+        cunKuan.add(valueBean);
         resultBean.setCunKuan(cunKuan);
 
         /////////////////////////////
@@ -311,13 +318,6 @@ public class InitTaskNew extends AsyncTask<String, Integer, NewResultBean> {
         valueBean = new ValueBean();
         valueBean.setType(4);
         valueBean.setName("票据贴现");
-        valueBean.setCountUnit("笔");
-        valueBean.setValueUnit("万元");
-        daiKuan.add(valueBean);
-
-        valueBean = new ValueBean();
-        valueBean.setType(4);
-        valueBean.setName("对公存款");
         valueBean.setCountUnit("笔");
         valueBean.setValueUnit("万元");
         daiKuan.add(valueBean);

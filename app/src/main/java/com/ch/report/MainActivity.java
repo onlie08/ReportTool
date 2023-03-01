@@ -433,6 +433,13 @@ public class MainActivity extends AppCompatActivity {
         valueBean.setCountUnit("笔");
         valueBean.setValueUnit("万元");
         cunKuan.add(valueBean);
+
+        valueBean = new ValueBean();
+        valueBean.setType(1);
+        valueBean.setName("对公存款");
+        valueBean.setCountUnit("笔");
+        valueBean.setValueUnit("万元");
+        cunKuan.add(valueBean);
         allValues.addAll(cunKuan);
 
         /////////////////////////////
@@ -645,13 +652,6 @@ public class MainActivity extends AppCompatActivity {
         valueBean = new ValueBean();
         valueBean.setType(4);
         valueBean.setName("票据贴现");
-        valueBean.setCountUnit("笔");
-        valueBean.setValueUnit("万元");
-        daiKuan.add(valueBean);
-
-        valueBean = new ValueBean();
-        valueBean.setType(4);
-        valueBean.setName("对公存款");
         valueBean.setCountUnit("笔");
         valueBean.setValueUnit("万元");
         daiKuan.add(valueBean);
