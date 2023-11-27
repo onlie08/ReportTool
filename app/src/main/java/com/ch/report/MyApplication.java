@@ -2,25 +2,18 @@ package com.ch.report;
 
 import android.app.Application;
 import android.util.Log;
-
-
 import com.blankj.utilcode.util.TimeUtils;
 import com.ch.report.bean.NewResultBean;
 import com.ch.report.bean.ResultBean;
 import com.ch.report.bean.UserBean;
-import com.ch.report.network.InitTask;
-import com.ch.report.network.SFUpdaterUtils;
-//import com.sf.appupdater.log.LogInfo;
-//import com.sf.appupdater.log.LogWriter;
 import com.tencent.bugly.crashreport.CrashReport;
-
 import java.text.SimpleDateFormat;
-
 import cn.leancloud.core.LeanCloud;
 
 public class MyApplication extends Application {
     private String TAG = this.getClass().getSimpleName();
     public static String USER_NAME;
+    public static String BANK_CODE;
     public static String DATE;
     public static ResultBean RESULT_BEAN;
     public static NewResultBean NEW_RESULT_BEAN;
@@ -32,20 +25,12 @@ public class MyApplication extends Application {
         DATE = TimeUtils.getNowString(formatter).substring(0, 10);
         Log.d("CAOHAI","DATE:"+DATE);
         initLeancloud();
-        CrashReport.initCrashReport(getApplicationContext(), "f259127a9c", BuildConfig.DEBUG);
-
-//        LogWriter logWriter = new LogWriter() {
-//            @Override
-//            public void write(LogInfo logInfo) {
-//                Log.d("logInfo", "logInfo: " + logInfo);
-//            }
-//        };
-//        SFUpdaterUtils.setAppUpdaterInfo(this, "226e144b0fa7571223666a6877d28ad2", "49fda4f1f7e74502a69955f83548b455", true, com.sf.appupdater.Environment.PRODUCTION, false, logWriter);
+        CrashReport.initCrashReport(getApplicationContext(), "53144aab5a", BuildConfig.DEBUG);
     }
 
     private void initLeancloud() {
         try {
-            LeanCloud.initialize("pGo6b8CEjiikbqlBeF45dXUQ-gzGzoHsz", "MxdSffhJonGk16a4U2kBwKig", "https://pgo6b8ce.lc-cn-n1-shared.com");
+            LeanCloud.initialize("XzTIwH2Ekw8kjJVlUScYC27S-gzGzoHsz", "uMHJnQE3XHN3cb82RUK8DpHs", "https://xztiwh2e.lc-cn-n1-shared.com");
         } catch (Exception e) {
             Log.e(TAG,e.getMessage());
         }

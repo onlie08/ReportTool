@@ -211,6 +211,7 @@ public class CountActivity extends AppCompatActivity {
         if(null != resultBean.getChanPin()) valueBeans.addAll(resultBean.getChanPin());
         if(null != resultBean.getDaiKuan()) valueBeans.addAll(resultBean.getDaiKuan());
         if(null != resultBean.getQiTa()) valueBeans.addAll(resultBean.getQiTa());
+        if(null != resultBean.getRiChang()) valueBeans.addAll(resultBean.getRiChang());
 
         for (ValueBean valueBean : valueBeans) {
             if (TextUtils.isEmpty(valueBean.getCount()) && TextUtils.isEmpty(valueBean.getValue()) && TextUtils.isEmpty(valueBean.getInfo())) {
@@ -261,6 +262,11 @@ public class CountActivity extends AppCompatActivity {
             }
             for(ValueBean valueBean : resultBean.getQiTa()){
                 if(!TextUtils.isEmpty(valueBean.getInfo())){
+                    all.add(valueBean);
+                }
+            }
+            for(ValueBean valueBean : resultBean.getRiChang()){
+                if(!TextUtils.isEmpty(valueBean.getValue()) || !TextUtils.isEmpty(valueBean.getCount())){
                     all.add(valueBean);
                 }
             }
@@ -371,7 +377,14 @@ public class CountActivity extends AppCompatActivity {
 
         valueBean = new ValueBean();
         valueBean.setType(1);
-        valueBean.setName("他行/区外挖转");
+        valueBean.setName("他行存我行活期");
+        valueBean.setCountUnit("笔");
+        valueBean.setValueUnit("万元");
+        cunKuan.add(valueBean);
+
+        valueBean = new ValueBean();
+        valueBean.setType(1);
+        valueBean.setName("他行存我行定期");
         valueBean.setCountUnit("笔");
         valueBean.setValueUnit("万元");
         cunKuan.add(valueBean);
@@ -446,6 +459,13 @@ public class CountActivity extends AppCompatActivity {
         valueBean = new ValueBean();
         valueBean.setType(2);
         valueBean.setName("代发工资客户");
+        valueBean.setCountUnit("户");
+        valueBean.setValueUnit("万元");
+        tuoHu.add(valueBean);
+
+        valueBean = new ValueBean();
+        valueBean.setType(2);
+        valueBean.setName("公积金缴存");
         valueBean.setCountUnit("户");
         valueBean.setValueUnit("万元");
         tuoHu.add(valueBean);
@@ -558,6 +578,20 @@ public class CountActivity extends AppCompatActivity {
         valueBean.setCountUnit("户");
         valueBean.setValueUnit("万元");
         chanPin.add(valueBean);
+
+        valueBean = new ValueBean();
+        valueBean.setType(3);
+        valueBean.setName("对公理财");
+        valueBean.setCountUnit("笔");
+        valueBean.setValueUnit("万元");
+        chanPin.add(valueBean);
+
+        valueBean = new ValueBean();
+        valueBean.setType(3);
+        valueBean.setName("对公保险");
+        valueBean.setCountUnit("笔");
+        valueBean.setValueUnit("万元");
+        chanPin.add(valueBean);
         allValues.addAll(chanPin);
 
         /////////////////////////////
@@ -597,6 +631,27 @@ public class CountActivity extends AppCompatActivity {
         valueBean.setCountUnit("笔");
         valueBean.setValueUnit("万元");
         daiKuan.add(valueBean);
+
+        valueBean = new ValueBean();
+        valueBean.setType(4);
+        valueBean.setName("个人逾期贷款清收");
+        valueBean.setCountUnit("笔");
+        valueBean.setValueUnit("万元");
+        daiKuan.add(valueBean);
+
+        valueBean = new ValueBean();
+        valueBean.setType(4);
+        valueBean.setName("个人不良/证券化清收");
+        valueBean.setCountUnit("笔");
+        valueBean.setValueUnit("万元");
+        daiKuan.add(valueBean);
+
+        valueBean = new ValueBean();
+        valueBean.setType(4);
+        valueBean.setName("普惠不良/证券化清收");
+        valueBean.setCountUnit("笔");
+        valueBean.setValueUnit("万元");
+        daiKuan.add(valueBean);
         allValues.addAll(daiKuan);
 
         /////////////////////////////
@@ -608,6 +663,65 @@ public class CountActivity extends AppCompatActivity {
         valueBean.setValueUnit("万元");
         qiTa.add(valueBean);
         allValues.addAll(qiTa);
+
+        ArrayList<ValueBean> riChang = new ArrayList<>();
+
+        valueBean = new ValueBean();
+        valueBean.setType(6);
+        valueBean.setName("加班");
+        valueBean.setCountUnit("天");
+        valueBean.setValueUnit("万元");
+        riChang.add(valueBean);
+
+        valueBean = new ValueBean();
+        valueBean.setType(6);
+        valueBean.setName("主持培训");
+        valueBean.setCountUnit("次");
+        valueBean.setValueUnit("万元");
+        riChang.add(valueBean);
+
+        valueBean = new ValueBean();
+        valueBean.setType(6);
+        valueBean.setName("表扬工单");
+        valueBean.setCountUnit("次");
+        valueBean.setValueUnit("万元");
+        riChang.add(valueBean);
+
+        valueBean = new ValueBean();
+        valueBean.setType(6);
+        valueBean.setName("网讯/宣传/文字类");
+        valueBean.setCountUnit("篇");
+        valueBean.setValueUnit("万元");
+        riChang.add(valueBean);
+
+        valueBean = new ValueBean();
+        valueBean.setType(6);
+        valueBean.setName("客户投诉");
+        valueBean.setCountUnit("次");
+        valueBean.setValueUnit("万元");
+        riChang.add(valueBean);
+
+        valueBean = new ValueBean();
+        valueBean.setType(6);
+        valueBean.setName("业务差错");
+        valueBean.setCountUnit("次");
+        valueBean.setValueUnit("万元");
+        riChang.add(valueBean);
+
+        valueBean = new ValueBean();
+        valueBean.setType(6);
+        valueBean.setName("缺席会议/培训");
+        valueBean.setCountUnit("次");
+        valueBean.setValueUnit("万元");
+        riChang.add(valueBean);
+
+        valueBean = new ValueBean();
+        valueBean.setType(6);
+        valueBean.setName("其他");
+        valueBean.setCountUnit("次");
+        valueBean.setValueUnit("万元");
+        riChang.add(valueBean);
+        allValues.addAll(riChang);
 
         return allValues;
     }

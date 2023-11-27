@@ -11,6 +11,7 @@
     <string name="tab_text_9">拓户类</string>
     <string name="tab_text_10">产品类</string>
     <string name="tab_text_11">贷款类</string>
+    <string name="tab_text_12">日常</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
@@ -20,4 +21,12 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+
+    <string-array name="bank_array">
+        <item>营业室</item>
+        <item>闻一多大道支行</item>
+        <item>新华街支行</item>
+        <item>红烛路支行</item>
+        <item>综合管理部</item>
+    </string-array>
 </resources>

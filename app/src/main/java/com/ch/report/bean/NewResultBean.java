@@ -7,12 +7,19 @@ public class NewResultBean {
     private ArrayList<ValueBean> tuoHu; //拓户类
     private ArrayList<ValueBean> chanPin; //产品类
     private ArrayList<ValueBean> daiKuan;//贷款类
+    private ArrayList<ValueBean> riChang; //日常
     private ArrayList<ValueBean> qiTa; //其他
 
     private String userName;
     private String date;
 
+    public ArrayList<ValueBean> getRiChang() {
+        return riChang;
+    }
 
+    public void setRiChang(ArrayList<ValueBean> riChang) {
+        this.riChang = riChang;
+    }
     public ArrayList<ValueBean> getCunKuan() {
         return cunKuan;
     }

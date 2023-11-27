@@ -6,11 +6,6 @@ pluginManagement {
         maven{
             url 'https://www.jitpack.io' //关键
         }
-//        maven {
-//            allowInsecureProtocol=true
-//            url "https://artifactory.sf-express.com/artifactory/maven/"
-//        }
-
     }
 }
 dependencyResolutionManagement {
@@ -21,10 +16,6 @@ dependencyResolutionManagement {
         maven{
             url 'https://www.jitpack.io' //关键
         }
-//        maven {
-//            allowInsecureProtocol=true
-//            url "https://artifactory.sf-express.com/artifactory/maven/"
-//        }
     }
 }
 rootProject.name = "ReportTool"

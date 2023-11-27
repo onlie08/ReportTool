@@ -13,9 +13,9 @@ import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.ch.report.bean.NewResultBean;
 import com.ch.report.bean.ValueBean;
+import com.ch.report.network.AVUtils;
 import com.ch.report.network.InitTaskNew;
 import com.ch.report.network.QueryAllTaskNew;
-import com.ch.report.network.SFUpdaterUtils;
 import com.ch.report.network.UserTask;
 import com.ch.report.ui.main.AllAdapterNew;
 import com.ch.report.ui.main.SectionsPagerAdapterNew;
@@ -32,8 +32,10 @@ import android.os.StrictMode;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,13 +52,11 @@ public class MainActivity extends AppCompatActivity {
     private String TAG = this.getClass().getSimpleName();
     private TextView title;
     private ActivityMainBinding binding;
-//    private ResultBean resultBean;
     boolean permission = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         if (android.os.Build.VERSION.SDK_INT > 9) {
@@ -69,8 +69,6 @@ public class MainActivity extends AppCompatActivity {
             finish();
             return;
         }
-//        permission = PerMissionManage.getSingleton().requestPermission(MainActivity.this);
-
 
         title = binding.title;
         title.setOnLongClickListener(view -> {
@@ -124,17 +122,16 @@ public class MainActivity extends AppCompatActivity {
         });
 
         String userName = SPUtils.getInstance().getString("userName");
+        String bankCode = SPUtils.getInstance().getString("bankCode");
         if(TextUtils.isEmpty(userName)){
             showUserDialog(false);
             return;
         }
         MyApplication.USER_NAME = userName;
-        title.setText("每日统计V"+ AppUtils.getAppVersionName()+"-"+MyApplication.USER_NAME);
+        MyApplication.BANK_CODE = bankCode;
+        AVUtils.setTb_user("tb_user_"+AVUtils.getBankCode(MyApplication.BANK_CODE));
+        title.setText("每日统计V"+ AppUtils.getAppVersionName()+"-"+MyApplication.USER_NAME+ "("+MyApplication.BANK_CODE+ ")");
         initTaskDate();
-
-//        SFUpdaterUtils.checkVersionOnly(MainActivity.this);
-//        SFUpdaterUtils.checkNewVersion(MainActivity.this);
-//        new Handler().postDelayed(() -> SFUpdaterUtils.checkVersion(MainActivity.this),1000);
     }
 
     private void initTaskDate(){
@@ -163,11 +160,30 @@ public class MainActivity extends AppCompatActivity {
         dialog.show();
         dialog.setCanceledOnTouchOutside(false);
         dialog.setCancelable(false);
+        Spinner spinner = inflate.findViewById(R.id.spinner);
         EditText edit_name = inflate.findViewById(R.id.edit_name);
         EditText edit_phone = inflate.findViewById(R.id.edit_phone);
 
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedItem = parent.getItemAtPosition(position).toString();
+                LogUtils.d(TAG,"onItemSelected:"+selectedItem);
+
+
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // 当没有选项被选择时的处理
+            }
+        });
+
         MaterialButton btn_sure = inflate.findViewById(R.id.btn_sure);
         btn_sure.setOnClickListener(view -> {
+            if (TextUtils.isEmpty(spinner.getSelectedItem().toString().trim())) {
+                Toast.makeText(getApplicationContext(),"请选择您所在银行",Toast.LENGTH_LONG).show();
+                return;
+            }
             if (TextUtils.isEmpty(edit_name.getText().toString().trim())) {
                 Toast.makeText(getApplicationContext(),"请输入您的名称",Toast.LENGTH_LONG).show();
                 return;
@@ -176,14 +192,17 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"请输入您的手机号",Toast.LENGTH_LONG).show();
                 return;
             }
-
+            MyApplication.BANK_CODE = spinner.getSelectedItem().toString().trim();
+            AVUtils.setTb_user("tb_user_"+AVUtils.getBankCode(MyApplication.BANK_CODE));
             new UserTask(new UserTask.CallBackListener() {
                 @Override
                 public void onSuccess() {
                     SPUtils.getInstance().put("userName",edit_name.getEditableText().toString());
                     SPUtils.getInstance().put("phone",edit_phone.getEditableText().toString());
+                    SPUtils.getInstance().put("bankCode",spinner.getSelectedItem().toString().trim());
                     MyApplication.USER_NAME = edit_name.getEditableText().toString();
-                    title.setText("每日统计V"+ AppUtils.getAppVersionName()+"-"+MyApplication.USER_NAME);
+                    MyApplication.BANK_CODE = spinner.getSelectedItem().toString().trim();
+                    title.setText("每日统计V"+ AppUtils.getAppVersionName()+"-"+MyApplication.USER_NAME+ "("+MyApplication.BANK_CODE+ ")");
                     dialog.dismiss();
                     initTaskDate();
                     if(exit){
@@ -195,7 +214,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onFail(String msg) {
                     ToastUtils.showLong(msg);
                 }
-            },edit_name.getText().toString().trim(), edit_phone.getText().toString().trim()).execute();
+            },edit_name.getText().toString().trim(), edit_phone.getText().toString().trim(),AVUtils.getBankCode(MyApplication.BANK_CODE.trim())).execute();
 
         });
     }
@@ -322,6 +341,11 @@ public class MainActivity extends AppCompatActivity {
                     all.add(valueBean);
                 }
             }
+            for(ValueBean valueBean : resultBean.getRiChang()){
+                if(!TextUtils.isEmpty(valueBean.getValue()) || !TextUtils.isEmpty(valueBean.getCount())){
+                    all.add(valueBean);
+                }
+            }
         }
 
         LogUtils.d(TAG,"showTodayCount:"+all.size());
@@ -429,7 +453,14 @@ public class MainActivity extends AppCompatActivity {
 
         valueBean = new ValueBean();
         valueBean.setType(1);
-        valueBean.setName("他行/区外挖转");
+        valueBean.setName("他行存我行活期");
+        valueBean.setCountUnit("笔");
+        valueBean.setValueUnit("万元");
+        cunKuan.add(valueBean);
+
+        valueBean = new ValueBean();
+        valueBean.setType(1);
+        valueBean.setName("他行存我行定期");
         valueBean.setCountUnit("笔");
         valueBean.setValueUnit("万元");
         cunKuan.add(valueBean);
@@ -504,6 +535,13 @@ public class MainActivity extends AppCompatActivity {
         valueBean = new ValueBean();
         valueBean.setType(2);
         valueBean.setName("代发工资客户");
+        valueBean.setCountUnit("户");
+        valueBean.setValueUnit("万元");
+        tuoHu.add(valueBean);
+
+        valueBean = new ValueBean();
+        valueBean.setType(2);
+        valueBean.setName("公积金缴存");
         valueBean.setCountUnit("户");
         valueBean.setValueUnit("万元");
         tuoHu.add(valueBean);
@@ -616,6 +654,20 @@ public class MainActivity extends AppCompatActivity {
         valueBean.setCountUnit("户");
         valueBean.setValueUnit("万元");
         chanPin.add(valueBean);
+
+        valueBean = new ValueBean();
+        valueBean.setType(3);
+        valueBean.setName("对公理财");
+        valueBean.setCountUnit("笔");
+        valueBean.setValueUnit("万元");
+        chanPin.add(valueBean);
+
+        valueBean = new ValueBean();
+        valueBean.setType(3);
+        valueBean.setName("对公保险");
+        valueBean.setCountUnit("笔");
+        valueBean.setValueUnit("万元");
+        chanPin.add(valueBean);
         allValues.addAll(chanPin);
 
         /////////////////////////////
@@ -655,6 +707,27 @@ public class MainActivity extends AppCompatActivity {
         valueBean.setCountUnit("笔");
         valueBean.setValueUnit("万元");
         daiKuan.add(valueBean);
+
+        valueBean = new ValueBean();
+        valueBean.setType(4);
+        valueBean.setName("个人逾期贷款清收");
+        valueBean.setCountUnit("笔");
+        valueBean.setValueUnit("万元");
+        daiKuan.add(valueBean);
+
+        valueBean = new ValueBean();
+        valueBean.setType(4);
+        valueBean.setName("个人不良/证券化清收");
+        valueBean.setCountUnit("笔");
+        valueBean.setValueUnit("万元");
+        daiKuan.add(valueBean);
+
+        valueBean = new ValueBean();
+        valueBean.setType(4);
+        valueBean.setName("普惠不良/证券化清收");
+        valueBean.setCountUnit("笔");
+        valueBean.setValueUnit("万元");
+        daiKuan.add(valueBean);
         allValues.addAll(daiKuan);
 
         /////////////////////////////
@@ -666,6 +739,65 @@ public class MainActivity extends AppCompatActivity {
         valueBean.setValueUnit("万元");
         qiTa.add(valueBean);
         allValues.addAll(qiTa);
+
+        ArrayList<ValueBean> riChang = new ArrayList<>();
+
+        valueBean = new ValueBean();
+        valueBean.setType(6);
+        valueBean.setName("加班");
+        valueBean.setCountUnit("天");
+        valueBean.setValueUnit("万元");
+        riChang.add(valueBean);
+
+        valueBean = new ValueBean();
+        valueBean.setType(6);
+        valueBean.setName("主持培训");
+        valueBean.setCountUnit("次");
+        valueBean.setValueUnit("万元");
+        riChang.add(valueBean);
+
+        valueBean = new ValueBean();
+        valueBean.setType(6);
+        valueBean.setName("表扬工单");
+        valueBean.setCountUnit("次");
+        valueBean.setValueUnit("万元");
+        riChang.add(valueBean);
+
+        valueBean = new ValueBean();
+        valueBean.setType(6);
+        valueBean.setName("网讯/宣传/文字类");
+        valueBean.setCountUnit("篇");
+        valueBean.setValueUnit("万元");
+        riChang.add(valueBean);
+
+        valueBean = new ValueBean();
+        valueBean.setType(6);
+        valueBean.setName("客户投诉");
+        valueBean.setCountUnit("次");
+        valueBean.setValueUnit("万元");
+        riChang.add(valueBean);
+
+        valueBean = new ValueBean();
+        valueBean.setType(6);
+        valueBean.setName("业务差错");
+        valueBean.setCountUnit("次");
+        valueBean.setValueUnit("万元");
+        riChang.add(valueBean);
+
+        valueBean = new ValueBean();
+        valueBean.setType(6);
+        valueBean.setName("缺席会议/培训");
+        valueBean.setCountUnit("次");
+        valueBean.setValueUnit("万元");
+        riChang.add(valueBean);
+
+        valueBean = new ValueBean();
+        valueBean.setType(6);
+        valueBean.setName("其他");
+        valueBean.setCountUnit("次");
+        valueBean.setValueUnit("万元");
+        riChang.add(valueBean);
+        allValues.addAll(riChang);
 
         return allValues;
     }

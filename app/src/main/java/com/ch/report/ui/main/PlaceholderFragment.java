@@ -124,7 +124,8 @@ public class PlaceholderFragment extends Fragment {
             edit_count.setVisibility(View.GONE);
             tv_count_unit.setVisibility(View.GONE);
 
-        }else if(valueBean.getCountUnit().equals("户") || valueBean.getCountUnit().equals("张")|| valueBean.getCountUnit().equals("克")) {
+        }else if(valueBean.getCountUnit().equals("户") || valueBean.getCountUnit().equals("张")|| valueBean.getCountUnit().equals("克")
+                || valueBean.getCountUnit().equals("天") || valueBean.getCountUnit().equals("次") || valueBean.getCountUnit().equals("篇")) {
             edit_value.setVisibility(View.GONE);
             tv_value_unit.setVisibility(View.GONE);
             edit_count.setVisibility(View.VISIBLE);

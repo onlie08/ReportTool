@@ -64,6 +64,7 @@ public class ReportTaskNew extends AsyncTask<String, Integer, NewResultBean> {
                 todo.put("chanPin", new Gson().toJson(resultBean.getChanPin()));
                 todo.put("daiKuan", new Gson().toJson(resultBean.getDaiKuan()));
                 todo.put("qiTa", new Gson().toJson(resultBean.getQiTa()));
+                todo.put("riChang", new Gson().toJson(resultBean.getRiChang()));
 
                 todo.saveInBackground().subscribe(new Observer<LCObject>() {
                     public void onSubscribe(Disposable disposable) {}
