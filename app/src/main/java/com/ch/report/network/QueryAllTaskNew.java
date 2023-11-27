@@ -65,7 +65,6 @@ public class QueryAllTaskNew extends AsyncTask<String, Integer, ArrayList<NewRes
                         resultBean.setTuoHu(new Gson().fromJson(object.getString("tuoHu"),new TypeToken<ArrayList<ValueBean>>() {}.getType()));
                         resultBean.setChanPin(new Gson().fromJson(object.getString("chanPin"),new TypeToken<ArrayList<ValueBean>>() {}.getType()));
                         resultBean.setDaiKuan(new Gson().fromJson(object.getString("daiKuan"),new TypeToken<ArrayList<ValueBean>>() {}.getType()));
-                        resultBean.setQiTa(new Gson().fromJson(object.getString("qiTa"),new TypeToken<ArrayList<ValueBean>>() {}.getType()));
                         resultBean.setRiChang(new Gson().fromJson(object.getString("riChang"),new TypeToken<ArrayList<ValueBean>>() {}.getType()));
                         resultBeans.add(resultBean);
                     }

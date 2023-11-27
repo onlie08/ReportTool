@@ -54,7 +54,6 @@ public class InitTaskNew extends AsyncTask<String, Integer, NewResultBean> {
                 resultBean.setTuoHu(new Gson().fromJson(obj.getString("tuoHu"),new TypeToken<ArrayList<ValueBean>>() {}.getType()));
                 resultBean.setChanPin(new Gson().fromJson(obj.getString("chanPin"),new TypeToken<ArrayList<ValueBean>>() {}.getType()));
                 resultBean.setDaiKuan(new Gson().fromJson(obj.getString("daiKuan"),new TypeToken<ArrayList<ValueBean>>() {}.getType()));
-                resultBean.setQiTa(new Gson().fromJson(obj.getString("qiTa"),new TypeToken<ArrayList<ValueBean>>() {}.getType()));
                 resultBean.setRiChang(new Gson().fromJson(obj.getString("riChang"),new TypeToken<ArrayList<ValueBean>>() {}.getType()));
             } else {
                 resultBean = initResultBean();
@@ -372,16 +371,6 @@ public class InitTaskNew extends AsyncTask<String, Integer, NewResultBean> {
         valueBean.setValueUnit("万元");
         daiKuan.add(valueBean);
         resultBean.setDaiKuan(daiKuan);
-
-        /////////////////////////////
-        ArrayList<ValueBean> qiTa = new ArrayList<>();
-        valueBean = new ValueBean();
-        valueBean.setType(5);
-        valueBean.setName("其他");
-        valueBean.setCountUnit("笔");
-        valueBean.setValueUnit("万元");
-        qiTa.add(valueBean);
-        resultBean.setQiTa(qiTa);
 
         ArrayList<ValueBean> riChang = new ArrayList<>();
         valueBean = new ValueBean();

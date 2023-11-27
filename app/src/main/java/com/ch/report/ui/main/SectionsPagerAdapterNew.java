@@ -22,7 +22,7 @@ import java.util.ArrayList;
 public class SectionsPagerAdapterNew extends FragmentPagerAdapter {
 
     @StringRes
-    private static final int[] TAB_TITLES = new int[]{R.string.tab_text_8, R.string.tab_text_9, R.string.tab_text_10, R.string.tab_text_11, R.string.tab_text_7, R.string.tab_text_12};
+    private static final int[] TAB_TITLES = new int[]{R.string.tab_text_8, R.string.tab_text_9, R.string.tab_text_10, R.string.tab_text_11, R.string.tab_text_12};
     private final Context mContext;
     private NewResultBean resultBean;
 
@@ -56,9 +56,6 @@ public class SectionsPagerAdapterNew extends FragmentPagerAdapter {
                 valueBeans = resultBean.getDaiKuan();
                 break;
             case 4:
-                valueBeans = resultBean.getQiTa();
-                break;
-            case 5:
                 valueBeans = resultBean.getRiChang();
                 break;
         }

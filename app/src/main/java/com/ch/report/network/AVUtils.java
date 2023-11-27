@@ -74,7 +74,6 @@ public class AVUtils {
         user_pay.put("tuoHu", new Gson().toJson(resultBean.getTuoHu()));
         user_pay.put("chanPin", new Gson().toJson(resultBean.getChanPin()));
         user_pay.put("daiKuan", new Gson().toJson(resultBean.getDaiKuan()));
-        user_pay.put("qiTa", new Gson().toJson(resultBean.getQiTa()));
         user_pay.put("riChang", new Gson().toJson(resultBean.getRiChang()));
         user_pay.put("userName",resultBean.getUserName());
         user_pay.put("date",resultBean.getDate());

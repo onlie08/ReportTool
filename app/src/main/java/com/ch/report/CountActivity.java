@@ -210,7 +210,6 @@ public class CountActivity extends AppCompatActivity {
         if(null != resultBean.getTuoHu()) valueBeans.addAll(resultBean.getTuoHu());
         if(null != resultBean.getChanPin()) valueBeans.addAll(resultBean.getChanPin());
         if(null != resultBean.getDaiKuan()) valueBeans.addAll(resultBean.getDaiKuan());
-        if(null != resultBean.getQiTa()) valueBeans.addAll(resultBean.getQiTa());
         if(null != resultBean.getRiChang()) valueBeans.addAll(resultBean.getRiChang());
 
         for (ValueBean valueBean : valueBeans) {
@@ -260,13 +259,11 @@ public class CountActivity extends AppCompatActivity {
                     all.add(valueBean);
                 }
             }
-            for(ValueBean valueBean : resultBean.getQiTa()){
-                if(!TextUtils.isEmpty(valueBean.getInfo())){
-                    all.add(valueBean);
-                }
-            }
             for(ValueBean valueBean : resultBean.getRiChang()){
                 if(!TextUtils.isEmpty(valueBean.getValue()) || !TextUtils.isEmpty(valueBean.getCount())){
+                    all.add(valueBean);
+                }
+                if(valueBean.getName().equals("其他") && !TextUtils.isEmpty(valueBean.getInfo())){
                     all.add(valueBean);
                 }
             }
@@ -653,16 +650,6 @@ public class CountActivity extends AppCompatActivity {
         valueBean.setValueUnit("万元");
         daiKuan.add(valueBean);
         allValues.addAll(daiKuan);
-
-        /////////////////////////////
-        ArrayList<ValueBean> qiTa = new ArrayList<>();
-        valueBean = new ValueBean();
-        valueBean.setType(5);
-        valueBean.setName("其他");
-        valueBean.setCountUnit("笔");
-        valueBean.setValueUnit("万元");
-        qiTa.add(valueBean);
-        allValues.addAll(qiTa);
 
         ArrayList<ValueBean> riChang = new ArrayList<>();
 

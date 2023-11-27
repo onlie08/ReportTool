@@ -67,7 +67,6 @@ public class AllAdapterNew extends RecyclerView.Adapter<AllAdapterNew.ViewHolder
         if(null != resultBean.getTuoHu()) valueBeans.addAll(resultBean.getTuoHu());
         if(null != resultBean.getChanPin()) valueBeans.addAll(resultBean.getChanPin());
         if(null != resultBean.getDaiKuan()) valueBeans.addAll(resultBean.getDaiKuan());
-        if(null != resultBean.getQiTa()) valueBeans.addAll(resultBean.getQiTa());
         if(null != resultBean.getRiChang()) valueBeans.addAll(resultBean.getRiChang());
 
         for (ValueBean valueBean : valueBeans) {

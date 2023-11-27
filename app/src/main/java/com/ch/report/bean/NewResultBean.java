@@ -8,7 +8,6 @@ public class NewResultBean {
     private ArrayList<ValueBean> chanPin; //产品类
     private ArrayList<ValueBean> daiKuan;//贷款类
     private ArrayList<ValueBean> riChang; //日常
-    private ArrayList<ValueBean> qiTa; //其他
 
     private String userName;
     private String date;
@@ -50,14 +49,6 @@ public class NewResultBean {
 
     public void setDaiKuan(ArrayList<ValueBean> daiKuan) {
         this.daiKuan = daiKuan;
-    }
-
-    public ArrayList<ValueBean> getQiTa() {
-        return qiTa;
-    }
-
-    public void setQiTa(ArrayList<ValueBean> qiTa) {
-        this.qiTa = qiTa;
     }
 
     public String getUserName() {
