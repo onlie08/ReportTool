@@ -22,6 +22,7 @@ public class QueryAllTaskNew extends AsyncTask<String, Integer, ArrayList<NewRes
     private QueryAllTaskNew.CallBackListener callBackListener;
     private ArrayList<NewResultBean> resultBeans;
     private String queryDate;
+    private String tbName;
     public QueryAllTaskNew(QueryAllTaskNew.CallBackListener callBackListener) {
         this.callBackListener = callBackListener;
     }
@@ -29,6 +30,12 @@ public class QueryAllTaskNew extends AsyncTask<String, Integer, ArrayList<NewRes
     public QueryAllTaskNew(CallBackListener callBackListener, String queryDate) {
         this.callBackListener = callBackListener;
         this.queryDate = queryDate;
+    }
+
+    public QueryAllTaskNew(CallBackListener callBackListener, String queryDate, String tbName) {
+        this.callBackListener = callBackListener;
+        this.queryDate = queryDate;
+        this.tbName = tbName;
     }
 
     public interface CallBackListener {
@@ -47,8 +54,12 @@ public class QueryAllTaskNew extends AsyncTask<String, Integer, ArrayList<NewRes
                 callBackListener.onFail("用户名称不能为空");
                 return null;
             }
-
-            LCQuery<LCObject> query = new LCQuery<>(AVUtils.getTb_name());
+            LCQuery<LCObject> query;
+            if(TextUtils.isEmpty(tbName)){
+                query = new LCQuery<>(AVUtils.getTb_name());
+            }else {
+                query = new LCQuery<>(tbName);
+            }
             if(!TextUtils.isEmpty(queryDate)){
                 query.whereEqualTo("date", queryDate);
             }

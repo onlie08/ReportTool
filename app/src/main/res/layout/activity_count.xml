@@ -77,6 +77,12 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="团队汇总" />
+        <RadioButton
+            android:id="@+id/radio_all_master"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="行长汇总" />
 
     </RadioGroup>
 

@@ -14,7 +14,6 @@ import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.ch.report.bean.NewResultBean;
 import com.ch.report.bean.ValueBean;
-import com.ch.report.network.QueryAllTask;
 import com.ch.report.network.QueryAllTaskNew;
 import com.google.gson.Gson;
 
@@ -30,6 +29,7 @@ public class CountActivity extends AppCompatActivity {
     private RadioButton radio_my;
     private RadioButton radio_my_all;
     private RadioButton radio_all;
+    private RadioButton radio_all_master;
     private ImageView img_back;
     private ArrayList<NewResultBean> allResult = new ArrayList<>();
     private ArrayList<NewResultBean> myResult = new ArrayList<>();
@@ -57,7 +57,6 @@ public class CountActivity extends AppCompatActivity {
         new QueryAllTaskNew(new QueryAllTaskNew.CallBackListener() {
             @Override
             public void onSuccess(ArrayList<NewResultBean> resultBeans) {
-                LogUtils.d(TAG, "onSuccess:" + resultBeans.size());
                 if (null == resultBeans || resultBeans.isEmpty()) {
                     ToastUtils.showLong("无数据");
                     return;
@@ -72,6 +71,84 @@ public class CountActivity extends AppCompatActivity {
             }
         }).execute();
 
+        if(MyApplication.USER_NAME.equals("曹欢") ||  MyApplication.USER_NAME.equals("韦大平") ||  MyApplication.USER_NAME.equals("郭威") ||  MyApplication.USER_NAME.equals("华晓林") ){
+            new QueryAllTaskNew(new QueryAllTaskNew.CallBackListener() {
+                @Override
+                public void onSuccess(ArrayList<NewResultBean> resultBeans) {
+                    if (null == resultBeans || resultBeans.isEmpty()) {
+                        return;
+                    }
+                    teamResult.addAll(resultBeans);
+                }
+
+                @Override
+                public void onFail(String msg) {
+                    ToastUtils.showLong(msg);
+                }
+            },"","tb_task_" + MyApplication.DATE.substring(5,7) +"_001").execute();
+
+            new QueryAllTaskNew(new QueryAllTaskNew.CallBackListener() {
+                @Override
+                public void onSuccess(ArrayList<NewResultBean> resultBeans) {
+                    if (null == resultBeans || resultBeans.isEmpty()) {
+                        return;
+                    }
+                    teamResult.addAll(resultBeans);
+                }
+
+                @Override
+                public void onFail(String msg) {
+                    ToastUtils.showLong(msg);
+                }
+            },"","tb_task_" + MyApplication.DATE.substring(5,7) +"_002").execute();
+
+            new QueryAllTaskNew(new QueryAllTaskNew.CallBackListener() {
+                @Override
+                public void onSuccess(ArrayList<NewResultBean> resultBeans) {
+                    if (null == resultBeans || resultBeans.isEmpty()) {
+                        return;
+                    }
+                    teamResult.addAll(resultBeans);
+                }
+
+                @Override
+                public void onFail(String msg) {
+                    ToastUtils.showLong(msg);
+                }
+            },"","tb_task_" + MyApplication.DATE.substring(5,7) +"_003").execute();
+
+            new QueryAllTaskNew(new QueryAllTaskNew.CallBackListener() {
+                @Override
+                public void onSuccess(ArrayList<NewResultBean> resultBeans) {
+                    if (null == resultBeans || resultBeans.isEmpty()) {
+                        return;
+                    }
+                    teamResult.addAll(resultBeans);
+                }
+
+                @Override
+                public void onFail(String msg) {
+                    ToastUtils.showLong(msg);
+                }
+            },"","tb_task_" + MyApplication.DATE.substring(5,7) +"_004").execute();
+
+            new QueryAllTaskNew(new QueryAllTaskNew.CallBackListener() {
+                @Override
+                public void onSuccess(ArrayList<NewResultBean> resultBeans) {
+                    if (null == resultBeans || resultBeans.isEmpty()) {
+                        return;
+                    }
+                    teamResult.addAll(resultBeans);
+                }
+
+                @Override
+                public void onFail(String msg) {
+                    ToastUtils.showLong(msg);
+                }
+            },"","tb_task_" + MyApplication.DATE.substring(5,7) +"_005").execute();
+        }
+
+
     }
 
     private void initView() {
@@ -81,6 +158,14 @@ public class CountActivity extends AppCompatActivity {
         radio_my = findViewById(R.id.radio_my);
         radio_my_all = findViewById(R.id.radio_my_all);
         radio_all = findViewById(R.id.radio_all);
+        radio_all_master = findViewById(R.id.radio_all_master);
+
+        if(MyApplication.USER_NAME.equals("曹欢") ||  MyApplication.USER_NAME.equals("韦大平") ||  MyApplication.USER_NAME.equals("郭威") ||  MyApplication.USER_NAME.equals("华晓林") ){
+            radio_all_master.setVisibility(View.VISIBLE);
+        }else {
+            radio_all_master.setVisibility(View.GONE);
+        }
+
         img_back = findViewById(R.id.img_back);
         img_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,6 +184,9 @@ public class CountActivity extends AppCompatActivity {
             } else if (radioGroup.getCheckedRadioButtonId() == R.id.radio_all) {
                 tv_result.setText("");
                 queryAll();
+            }else if (radioGroup.getCheckedRadioButtonId() == R.id.radio_all_master) {
+                tv_result.setText("");
+                queryAllMaster();
             }
         });
     }
@@ -657,7 +745,7 @@ public class CountActivity extends AppCompatActivity {
         valueBean.setType(6);
         valueBean.setName("加班");
         valueBean.setCountUnit("天");
-        valueBean.setValueUnit("万元");
+        valueBean.setValueUnit("天");
         riChang.add(valueBean);
 
         valueBean = new ValueBean();
@@ -711,5 +799,35 @@ public class CountActivity extends AppCompatActivity {
         allValues.addAll(riChang);
 
         return allValues;
+    }
+
+
+    private void queryAllMaster() {
+        LogUtils.d(TAG, "queryAllMaster");
+        myResult.clear();
+        for(NewResultBean resultBean : teamResult){
+            myResult.add(resultBean);
+        }
+        LogUtils.d(TAG, "myResult："+myResult.size());
+        for(NewResultBean resultBean : myResult){
+            resultBean.setDate(resultBean.getDate().replaceAll("-",""));
+        }
+
+        String today = MyApplication.DATE;
+        String month = today.substring(0, today.length() - 2) + "01";
+        int date = Integer.valueOf(month.replaceAll("-",""));
+
+        Iterator<NewResultBean> iterator = myResult.iterator();
+        while (iterator.hasNext()){
+            NewResultBean resultBean = iterator.next();
+            int d = Integer.valueOf(resultBean.getDate());
+            if(d < date){
+                LogUtils.d(TAG, "移除："+resultBean.getDate());
+                iterator.remove();
+            }
+        }
+        LogUtils.d(TAG, "myResult："+myResult.size());
+
+        tv_result.setText(dealWithResult(myResult));
     }
 }

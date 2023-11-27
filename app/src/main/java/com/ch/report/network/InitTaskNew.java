@@ -377,7 +377,7 @@ public class InitTaskNew extends AsyncTask<String, Integer, NewResultBean> {
         valueBean.setType(6);
         valueBean.setName("加班");
         valueBean.setCountUnit("天");
-        valueBean.setValueUnit("万元");
+        valueBean.setValueUnit("天");
         riChang.add(valueBean);
 
         valueBean = new ValueBean();
