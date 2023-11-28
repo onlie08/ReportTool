@@ -116,6 +116,9 @@ public class AVUtils {
             case "行长室":
                 result = "005";
                 break;
+            case "赤壁支行":
+                result = "006";
+                break;
         }
         return result;
     }

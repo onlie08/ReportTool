@@ -123,14 +123,14 @@ public class MainActivity extends AppCompatActivity {
 
         String userName = SPUtils.getInstance().getString("userName");
         String bankCode = SPUtils.getInstance().getString("bankCode");
-        if(TextUtils.isEmpty(userName)){
+        if(TextUtils.isEmpty(userName) || TextUtils.isEmpty(bankCode)){
             showUserDialog(false);
             return;
         }
         MyApplication.USER_NAME = userName;
         MyApplication.BANK_CODE = bankCode;
         AVUtils.setTb_user("tb_user_"+AVUtils.getBankCode(MyApplication.BANK_CODE));
-        title.setText("每日统计V"+ AppUtils.getAppVersionName()+"-"+MyApplication.USER_NAME+ "("+MyApplication.BANK_CODE+ ")");
+        title.setText(MyApplication.BANK_CODE + "-"+ MyApplication.USER_NAME + "-v" + AppUtils.getAppVersionName());
         initTaskDate();
     }
 
@@ -202,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
                     SPUtils.getInstance().put("bankCode",spinner.getSelectedItem().toString().trim());
                     MyApplication.USER_NAME = edit_name.getEditableText().toString();
                     MyApplication.BANK_CODE = spinner.getSelectedItem().toString().trim();
-                    title.setText("每日统计V"+ AppUtils.getAppVersionName()+"-"+MyApplication.USER_NAME+ "("+MyApplication.BANK_CODE+ ")");
+                    title.setText(MyApplication.BANK_CODE + "-"+ MyApplication.USER_NAME + "-v" + AppUtils.getAppVersionName());
                     dialog.dismiss();
                     initTaskDate();
                     if(exit){
